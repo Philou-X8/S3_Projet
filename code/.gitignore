@@ -1,0 +1,9 @@
+#docker/
+#service/
+
+# IntelliJ
+.idea
+*.ipr
+*.iml
+*.iws
+
