@@ -58,6 +58,26 @@ public class RoleService {
         return p;
     }
 
+    /********************************/
+    @GET
+    @Path("/funi")
+    @PermitAll
+    public Person funi() {
+        Person p = new Person();
+        p.cip = this.securityContext.getUserPrincipal().getName();
+        p.last_name = (String)this.jwt.getClaim("family_name");
+        p.first_name = (String)this.jwt.getClaim("given_name");
+        p.email = (String)this.jwt.getClaim("email");
+        Map realmAccess = (Map)this.jwt.getClaim("realm_access");
+        if (realmAccess != null && realmAccess.containsKey("roles")) {
+            p.roles = (List)realmAccess.get("roles");
+        }
+
+        System.out.println(p);
+        return p;
+    }
+    /********************************/
+
     @GET
     @Path("/any")
     @PermitAll
@@ -75,4 +95,5 @@ public class RoleService {
         System.out.println(p);
         return p;
     }
+
 }

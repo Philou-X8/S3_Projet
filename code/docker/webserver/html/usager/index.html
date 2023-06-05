@@ -75,6 +75,28 @@
                 });
             span.innerHTML = '<br> <strong>' + "Vous n'avez pas le role d'enseignant" + '</strong> </br>'
         }
+        function requestFuniButton() {
+            const div = document.getElementById('title');
+            const span = div.firstElementChild;
+            axios.get("http://localhost:8888/api/funi", {
+                headers: {
+                    'Authorization': 'Bearer ' + keycloak.token
+                }
+            })
+                .then(function (response) {
+                    console.log("Response: ", response.status);
+                    span.innerHTML = '<br> <strong>' + 'funi text' + '</strong> </br>'
+                })
+                .catch(function (error) {
+                    console.log('refreshing');
+                    keycloak.updateToken(5).then(function () {
+                        console.log('Token refreshed');
+                    }).catch(function () {
+                        console.log('Failed to refresh token');
+                    })
+                });
+            span.innerHTML = '<br> <strong>' + "Loading..." + '</strong> </br>'
+        }
 
         function logout() {
          //   let logoutURL = "http://localhost:8080//realms/usager/protocol/openid-connect/logout"
@@ -87,6 +109,7 @@
 <body onload="initKeycloak()">
 <button onclick="requestStudent()">Étudiant?</button>
 <button onclick="requestTeacher()">Enseignant?</button>
+<button onclick="requestFuniButton()">Funi button</button>
 <div id="title">
     <span></span>
 </div>
