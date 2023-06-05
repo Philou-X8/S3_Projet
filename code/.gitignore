@@ -1,6 +1,8 @@
 #docker/
 #service/
-
+service/.gradle
+service/build
+service/out
 # IntelliJ
 .idea
 *.ipr
