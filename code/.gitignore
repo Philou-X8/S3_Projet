@@ -2,6 +2,7 @@
 #service/
 service/.gradle
 service/build
+build
 service/out
 # IntelliJ
 .idea
