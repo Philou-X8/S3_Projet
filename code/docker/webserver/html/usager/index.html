@@ -75,6 +75,8 @@
                 });
             span.innerHTML = '<br> <strong>' + "Vous n'avez pas le role d'enseignant" + '</strong> </br>'
         }
+
+
         function requestFuniButton() {
             const div = document.getElementById('title');
             const span = div.firstElementChild;
@@ -85,10 +87,13 @@
             })
                 .then(function (response) {
                     console.log("Response: ", response.status);
-                    span.innerHTML = '<br> <strong>' + 'funi text' + '</strong> </br>'
+                    span.innerHTML = '<br> <strong>' + 'button clicked' + '</strong> </br>' +
+                        '<br> <strong>' + response.data.cip.toString() + '</strong> </br>'
                 })
                 .catch(function (error) {
                     console.log('refreshing');
+                    span.innerHTML = '<br> <strong>' + 'error with the button' + '</strong> </br>' +
+                        '<br> <strong>' + error.toString() + '</strong> </br>'
                     keycloak.updateToken(5).then(function () {
                         console.log('Token refreshed');
                     }).catch(function () {

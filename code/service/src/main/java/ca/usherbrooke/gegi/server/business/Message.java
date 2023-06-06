@@ -14,5 +14,7 @@ public class Message {
     public String description;
     public String inscriptor;
     public String inscription;
-
+    public String toString() {
+        return "Message: this is not coded yet";
+    }
 }

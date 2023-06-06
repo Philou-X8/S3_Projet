@@ -1,5 +1,6 @@
 package ca.usherbrooke.gegi.server.service;
 
+import ca.usherbrooke.gegi.server.business.Message;
 import ca.usherbrooke.gegi.server.business.Person;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
+import ca.usherbrooke.gegi.server.persistence.MessageMapper;
+import org.jsoup.parser.Parser;
+
 @Path("/api")
 @Produces({"application/json"})
 public class RoleService {
@@ -20,6 +24,9 @@ public class RoleService {
     SecurityContext securityContext;
     @Inject
     JsonWebToken jwt;
+
+    @Inject
+    MessageMapper messageMapper;
 
 
     @GET
@@ -62,7 +69,7 @@ public class RoleService {
     @GET
     @Path("/funi")
     @PermitAll
-    public Person funi() {
+    public Message funi() {
         Person p = new Person();
         p.cip = this.securityContext.getUserPrincipal().getName();
         p.last_name = (String)this.jwt.getClaim("family_name");
@@ -72,9 +79,11 @@ public class RoleService {
         if (realmAccess != null && realmAccess.containsKey("roles")) {
             p.roles = (List)realmAccess.get("roles");
         }
+        Message message = messageMapper.selectOne(27555);
+        return message;
 
-        System.out.println(p);
-        return p;
+        //System.out.println(p);
+        //return p;
     }
     /********************************/
 
