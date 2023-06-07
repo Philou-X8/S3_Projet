@@ -8,9 +8,7 @@ import java.util.Map;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 
@@ -18,10 +16,12 @@ import ca.usherbrooke.gegi.server.persistence.InventoryMapper;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import ca.usherbrooke.gegi.server.persistence.MessageMapper;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.jsoup.parser.Parser;
 
 @Path("/api")
 @Produces({"application/json"})
+@Consumes({"application/json"})
 public class InventoryService {
     @Context
     SecurityContext securityContext;
@@ -78,6 +78,18 @@ public class InventoryService {
     }
     /********************************/
 
+    @GET
+    @Path("/getBookISBN/{isbn}")
+    @PermitAll
+    public Book getBookISBN(
+            @PathParam("isbn") Long isbn
+    ) {
+        System.out.println("getBookISBN, param received: " + isbn.toString()); // print
+        Book book = inventoryMapper.getBookISBN(isbn);
+        if(book==null) book = new Book();
+        System.out.println("SQL return : ISBN : " + book.codeisbn.toString()); // print
+        return book;
+    }
     /*
     @GET
     @Path("/any")

@@ -11,4 +11,5 @@ import java.util.List;
 public interface InventoryMapper {
 
     Book getBook();
+    Book getBookISBN(Long isbn);
 }

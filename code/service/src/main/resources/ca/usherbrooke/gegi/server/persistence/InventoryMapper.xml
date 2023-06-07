@@ -20,5 +20,21 @@
         where book_id = 1;
     </select>
 
+    <select id="getBookISBN" resultType="ca.usherbrooke.gegi.server.business.Book">
+        select sigle,
+               book_id,
+               label,
+               codeisbn,
+               author_id,
+               editor_id,
+               publicationdate,
+               format_id,
+               url,
+               language_id,
+               image_id
+        from public.book
+        where codeisbn = #{isbn};
+    </select>
+
 
 </mapper>
