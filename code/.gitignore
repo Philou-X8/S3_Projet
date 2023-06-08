@@ -4,6 +4,7 @@ service/.gradle
 service/build
 build
 service/out
+out
 # IntelliJ
 .idea
 *.ipr

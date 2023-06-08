@@ -27,12 +27,12 @@ services:
     networks:
       acad-net:
 
-  database:
+  database_old:
     image: postgres:13
     container_name: database
     restart: always
     ports:
-      - 5444:5432
+      - "5444:5432"
     volumes:
       - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
@@ -41,6 +41,18 @@ services:
       POSTGRES_DATABASE: ${POSTGRES_DATABASE}
     networks:
       acad-net:
+  database:
+    image: postgres:13
+    container_name: databaseInventory
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres/initInventory.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: postgres
 
 networks:
   acad-net:
