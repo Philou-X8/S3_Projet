@@ -103,12 +103,12 @@
             span.innerHTML = '<br> <strong>' + "Loading..." + '</strong> </br>'
         }
 
-        function requestISBN() {
+        function requestFromID() {
             const div = document.getElementById('title');
-            var isbn = document.getElementById('codeISBN');
+            var idBook = document.getElementById('book_id_in');
             const span = div.firstElementChild;
 
-            axios.get("http://localhost:8888/api/getBookISBN/"+isbn.value, {
+            axios.get("http://localhost:8888/api/getBookFromID/"+idBook.value, {
                 headers: {
                     'Authorization': 'Bearer ' + keycloak.token
                 }
@@ -132,6 +132,34 @@
         }
 
 
+        function requestFromSigle() {
+            const div = document.getElementById('title');
+            var sigleBook = document.getElementById('sigle_in');
+            const span = div.firstElementChild;
+
+            axios.get("http://localhost:8888/api/getBookFromSigle/"+sigleBook.value, {
+                headers: {
+                    'Authorization': 'Bearer ' + keycloak.token
+                }
+            })
+                .then(function (response) {
+                    console.log("Response: ", response.status);
+                    span.innerHTML = '<br> <strong>' + 'button clicked' + '</strong> </br>' +
+                        '<br> <strong>' + response.data.codeisbn + '</strong> </br>'
+                })
+                .catch(function (error) {
+                    console.log('refreshing');
+                    span.innerHTML = '<br> <strong>' + 'error with the button' + '</strong> </br>' +
+                        '<br> <strong>' + error.toString() + '</strong> </br>'
+                    keycloak.updateToken(5).then(function () {
+                        console.log('Token refreshed');
+                    }).catch(function () {
+                        console.log('Failed to refresh token');
+                    })
+                });
+            span.innerHTML = '<br> <strong>' + "Loading..." + '</strong> </br>'
+        }
+
         function logout() {
          //   let logoutURL = "http://localhost:8080//realms/usager/protocol/openid-connect/logout"
          //   window.location.href = logoutURL;
@@ -146,9 +174,16 @@
 <button onclick="requestFuniButton()">Funi button</button>
 <div>
     <form>
-        <label>ISBN:</label>
-        <input type="text" id="codeISBN" name="code_isbn"/>
-        <button type="button" id="btnsub" onclick="requestISBN()">Register</button>
+        <label>Book ID:</label>
+        <input type="text" id="book_id_in" name="book_id_label"/>
+        <button type="button" id="button_book_id" onclick="requestFromID()">Register</button>
+    </form>
+</div>
+<div>
+    <form>
+        <label>Code du cours:</label>
+        <input type="text" id="sigle_in" name="sigle_label"/>
+        <button type="button" id="button_sigle" onclick="requestFromSigle()">Register</button>
     </form>
 </div>
 <!--<form><label for="codeISBN">ISBN:</label>-->

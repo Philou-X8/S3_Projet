@@ -36,5 +36,37 @@
         where codeisbn = #{isbn};
     </select>
 
+    <select id="getBookFromID" resultType="ca.usherbrooke.gegi.server.business.Book">
+        select sigle,
+               book_id,
+               label,
+               codeisbn,
+               author_id,
+               editor_id,
+               publicationdate,
+               format_id,
+               url,
+               language_id,
+               image_id
+        from public.book
+        where book_id = #{idBook};
+    </select>
+
+    <select id="getBookFromSigle" resultType="ca.usherbrooke.gegi.server.business.Book">
+        select sigle,
+               book_id,
+               label,
+               codeisbn,
+               author_id,
+               editor_id,
+               publicationdate,
+               format_id,
+               url,
+               language_id,
+               image_id
+        from public.book
+        where sigle = #{sigleBook};
+    </select>
+
 
 </mapper>
