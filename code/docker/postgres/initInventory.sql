@@ -162,7 +162,7 @@ CREATE TABLE book
 INSERT INTO book (sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id, image_id)
 values ('GEN230', 1, 'Électrotechnique - 4e éd.',9782763781853, 1, 1, '2007-08-01', 1, 'https://usherbrooke.coop/fr/boutique/categories/livres-scolaires-8110/electrotechnique---4e-ed-1899232', 1, 1);
 insert into book(values ('GEN145', 2, 'C++ in One Hour a Day, Sams Teach Yourself - 8th Ed.',9780789757746, 2, 2, '2016-12-28', 1, 'https://usherbrooke.coop/fr/boutique/categories/genie-informatique-8154/c-in-one-hour-a-day-sams-teach-yourself---8th-ed-1923433',2 ,2));
-delete from book where book_id = 2;
+--delete from book where book_id = 2;
 
 CREATE TABLE associated_to
 (
