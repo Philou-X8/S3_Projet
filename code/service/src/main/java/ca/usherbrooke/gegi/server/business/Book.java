@@ -14,6 +14,7 @@ public class Book {
     public String url = "";
     public Integer language_id = 0;
     public Integer image_id = 0;
+    @Override
     public String toString(){
         return "Book [ " + "id : " + book_id + ", " + label + ", by : " + author_id + ", lange : " + language_id;
     }

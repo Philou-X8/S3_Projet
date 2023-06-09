@@ -20,6 +20,12 @@
         where book_id = 1;
     </select>
 
+    <select id="getBookAll" resultType="ca.usherbrooke.gegi.server.business.Book">
+        select *
+        from public.book
+        order by label desc;
+    </select>
+
     <select id="getBookISBN" resultType="ca.usherbrooke.gegi.server.business.Book">
         select sigle,
                book_id,

@@ -31,43 +31,6 @@ public class InventoryService {
     InventoryMapper inventoryMapper;
 
 
-    /*
-    @GET
-    @Path("/teacher")
-    @RolesAllowed({"enseignant"})
-    public Person teacher() {
-        Person p = new Person();
-        p.cip = this.securityContext.getUserPrincipal().getName();
-        p.last_name = (String)this.jwt.getClaim("family_name");
-        p.first_name = (String)this.jwt.getClaim("given_name");
-        p.email = (String)this.jwt.getClaim("email");
-        Map realmAccess = (Map)this.jwt.getClaim("realm_access");
-        if (realmAccess != null && realmAccess.containsKey("roles")) {
-            p.roles = (List)realmAccess.get("roles");
-        }
-
-        System.out.println(p);
-        return p;
-    }
-
-    @GET
-    @Path("/student")
-    @RolesAllowed({"etudiant"})
-    public Person student() {
-        Person p = new Person();
-        p.cip = this.securityContext.getUserPrincipal().getName();
-        p.last_name = (String)this.jwt.getClaim("family_name");
-        p.first_name = (String)this.jwt.getClaim("given_name");
-        p.email = (String)this.jwt.getClaim("email");
-        Map realmAccess = (Map)this.jwt.getClaim("realm_access");
-        if (realmAccess != null && realmAccess.containsKey("roles")) {
-            p.roles = (List)realmAccess.get("roles");
-        }
-
-        System.out.println(p);
-        return p;
-    }
-    */
     /********************************/
     @GET
     @Path("/getBook")
@@ -77,6 +40,14 @@ public class InventoryService {
         return book;
     }
     /********************************/
+    @GET
+    @Path("/getBookAll")
+    @PermitAll
+    public List<Book> getBookAll() {
+        List<Book> books = inventoryMapper.getBookAll();
+        return books;
+    }
+
 
     @GET
     @Path("/getBookFromID/{idBook}")
@@ -105,23 +76,4 @@ public class InventoryService {
         return book;
     }
 
-    /*
-    @GET
-    @Path("/any")
-    @PermitAll
-    public Person me() {
-        Person p = new Person();
-        p.cip = this.securityContext.getUserPrincipal().getName();
-        p.last_name = (String)this.jwt.getClaim("family_name");
-        p.first_name = (String)this.jwt.getClaim("given_name");
-        p.email = (String)this.jwt.getClaim("email");
-        Map realmAccess = (Map)this.jwt.getClaim("realm_access");
-        if (realmAccess != null && realmAccess.containsKey("roles")) {
-            p.roles = (List)realmAccess.get("roles");
-        }
-
-        System.out.println(p);
-        return p;
-    }
-    */
 }
