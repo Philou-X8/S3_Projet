@@ -26,7 +26,10 @@ function requestFromID() {
     })
         .then(function (response) {
             console.log("Response: ", response.status);
-            printBookInfo(response.data);
+            //printBookInfo(response.data);
+            resetBookTable();
+            addBookToList(response.data);
+
             //span.innerHTML = '<br> <strong>' + 'button clicked' + '</strong> </br>' +
             //    '<br> <strong>' + response.data.codeisbn + '</strong> </br>'
         })
@@ -55,7 +58,9 @@ function requestFromSigle() {
     })
         .then(function (response) {
             console.log("Response: ", response.status);
-            printBookInfo(response.data);
+            //printBookInfo(response.data);
+            resetBookTable();
+            addBookToList(response.data);
         })
         .catch(function (error) {
             console.log('refreshing');
@@ -81,7 +86,8 @@ function requestAllBook() {
     })
         .then(function (response) {
             console.log("Response: ", response.status);
-            response.data.forEach(printBookInfo);
+            resetBookTable();
+            response.data.forEach(addBookToList);
 
         })
         .catch(function (error) {
@@ -95,4 +101,32 @@ function requestAllBook() {
             })
         });
     span.innerHTML = '<br> <strong>' + "Loading..." + '</strong> </br>'
+}
+
+function resetBookTable(){
+    var tableBody = document.getElementById("book_body");
+    if(tableBody != null) {
+        tableBody.remove();
+    }
+
+    var table = document.getElementById("book_table");
+    table.createTBody().id = "book_body";
+}
+
+function addBookToList(book){
+
+    //var row = table.insertRow(1);
+    tableBody = document.getElementById("book_body");
+    var row = tableBody.insertRow(-1);
+
+
+    row.insertCell(0).innerHTML = book.sigle;
+    row.insertCell(1).innerHTML = book.label;
+    row.insertCell(2).innerHTML = book.author_id;
+    row.insertCell(3).innerHTML = book.editor_id;
+    row.insertCell(4).innerHTML = book.codeisbn;
+    row.insertCell(5).innerHTML = '<a href="'+book.url+'" target="_blank">COOP</a>';
+    row.insertCell(6).innerHTML = book.language_id;
+
+    //document.getElementById("book_link").setAttribute("href",book.url);
 }
