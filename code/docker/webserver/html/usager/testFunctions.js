@@ -79,3 +79,7 @@ function requestFuniButton() {
         });
     span.innerHTML = '<br> <strong>' + "Loading..." + '</strong> </br>'
 }
+
+function viewerMode() {
+ span.innerHTML = '<label>Error</label>'
+}

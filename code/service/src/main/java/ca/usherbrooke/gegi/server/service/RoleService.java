@@ -49,7 +49,7 @@ public class RoleService {
 
     @GET
     @Path("/student")
-    @RolesAllowed({"etudiant"})
+    @RolesAllowed({"admin","etudiant"})
     public Person student() {
         Person p = new Person();
         p.cip = this.securityContext.getUserPrincipal().getName();
@@ -59,6 +59,7 @@ public class RoleService {
         Map realmAccess = (Map)this.jwt.getClaim("realm_access");
         if (realmAccess != null && realmAccess.containsKey("roles")) {
             p.roles = (List)realmAccess.get("roles");
+
         }
 
         System.out.println(p);

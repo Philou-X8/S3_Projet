@@ -125,7 +125,7 @@ function addBookToList(book){
     row.insertCell(2).innerHTML = book.author_id;
     row.insertCell(3).innerHTML = book.editor_id;
     row.insertCell(4).innerHTML = book.codeisbn;
-    row.insertCell(5).innerHTML = '<a href="'+book.url+'" target="_blank">COOP</a>';
+    row.insertCell(5).innerHTML = '<a href="' + book.url + '" target="_blank">COOP</a>';
     row.insertCell(6).innerHTML = book.language_id;
 
     //document.getElementById("book_link").setAttribute("href",book.url);
