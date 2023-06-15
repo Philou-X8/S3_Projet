@@ -2,121 +2,66 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="http://localhost:8180/js/keycloak.js"></script>
-    <script>
-        var keycloak;
-        function initKeycloak() {
-            keycloak = new Keycloak({
-                "realm": "usager",
-                "auth-server-url": "http://localhost:8180/",
-                "ssl-required": "external",
-                "clientId": "frontend",
-                "public-client": true,
-                "confidential-port": 0
-            });
-            keycloak.init({onLoad: 'login-required'}).then(function (authenticated) {
-                alert(authenticated ? 'authenticated' : 'not authenticated');
 
-            }).catch(function () {
-                alert('failed to initialize');
-            });
-        }
+    <script src="keycloakAuth.js"></script>
+    <script src="testFunctions.js"></script>
+    <script src="bookSearch.js"></script>
 
+    <style>
+        .myTable { background-color:#eee;border-collapse:collapse; }
+        .myTable th { background-color:#000;color:white; }
+        .myTable td, .myTable th { padding:5px;border:1px solid #000; }
+    </style>
 
-        function requestStudent() {
-            const div = document.getElementById('title');
-            const span = div.firstElementChild;
-            axios.get("http://localhost:8888/api/student", {
-                headers: {
-                    'Authorization': 'Bearer ' + keycloak.token
-                }
-            })
-                .then(function (response) {
-                    console.log("Response: ", response.status);
-                    span.innerHTML = '<br> <strong>' + response.data.cip + '</strong> </br>' +
-                        '<br> <strong>' + response.data.last_name + '</strong> </br>' +
-                        '<br> <strong>' + response.data.first_name + '</strong> </br>' +
-                        '<br> <strong>' + response.data.email + '</strong> </br>' +
-                        '<br> <strong>' + response.data.roles + '</strong> </br>'
-                })
-                .catch(function (error) {
-                    console.log('refreshing');
-                    keycloak.updateToken(5).then(function () {
-                        console.log('Token refreshed');
-                    }).catch(function () {
-                        console.log('Failed to refresh token');
-                    })
-                });
-            span.innerHTML = '<br> <strong>' + "Vous n'avez pas le role d'étudiant" + '</strong> </br>'
-        }
-
-        function requestTeacher() {
-            const div = document.getElementById('title');
-            const span = div.firstElementChild;
-            axios.get("http://localhost:8888/api/teacher", {
-                headers: {
-                    'Authorization': 'Bearer ' + keycloak.token
-                }
-            })
-                .then(function (response) {
-                    console.log("Response: ", response.status);
-                    span.innerHTML = '<br> <strong>' + response.data.cip + '</strong> </br>' +
-                        '<br> <strong>' + response.data.last_name + '</strong> </br>' +
-                        '<br> <strong>' + response.data.first_name + '</strong> </br>' +
-                        '<br> <strong>' + response.data.email + '</strong> </br>' +
-                        '<br> <strong>' + response.data.roles + '</strong> </br>'
-                })
-                .catch(function (error) {
-                    console.log('refreshing');
-                    keycloak.updateToken(5).then(function () {
-                        console.log('Token refreshed');
-                    }).catch(function () {
-                        console.log('Failed to refresh token');
-                    })
-                });
-            span.innerHTML = '<br> <strong>' + "Vous n'avez pas le role d'enseignant" + '</strong> </br>'
-        }
-
-
-        function requestFuniButton() {
-            const div = document.getElementById('title');
-            const span = div.firstElementChild;
-            axios.get("http://localhost:8888/api/funi", {
-                headers: {
-                    'Authorization': 'Bearer ' + keycloak.token
-                }
-            })
-                .then(function (response) {
-                    console.log("Response: ", response.status);
-                    span.innerHTML = '<br> <strong>' + 'button clicked' + '</strong> </br>' +
-                        '<br> <strong>' + response.data.cip.toString() + '</strong> </br>'
-                })
-                .catch(function (error) {
-                    console.log('refreshing');
-                    span.innerHTML = '<br> <strong>' + 'error with the button' + '</strong> </br>' +
-                        '<br> <strong>' + error.toString() + '</strong> </br>'
-                    keycloak.updateToken(5).then(function () {
-                        console.log('Token refreshed');
-                    }).catch(function () {
-                        console.log('Failed to refresh token');
-                    })
-                });
-            span.innerHTML = '<br> <strong>' + "Loading..." + '</strong> </br>'
-        }
-
-        function logout() {
-         //   let logoutURL = "http://localhost:8080//realms/usager/protocol/openid-connect/logout"
-         //   window.location.href = logoutURL;
-        }
-
-
-    </script>
 </head>
 <body onload="initKeycloak()">
 <button onclick="requestStudent()">Étudiant?</button>
 <button onclick="requestTeacher()">Enseignant?</button>
 <button onclick="requestFuniButton()">Funi button</button>
+<button onclick="requestAllBook()">Get all books</button>
+<div>
+    <form>
+        <label>Book ID:</label>
+        <input type="text" id="book_id_in" name="book_id_label"/>
+        <button type="button" id="button_book_id" onclick="requestFromID()">Register</button>
+    </form>
+</div>
+<div>
+    <form>
+        <label>Code du cours:</label>
+        <input type="text" id="sigle_in" name="sigle_label"/>
+        <button type="button" id="button_sigle" onclick="requestFromSigle()">Register</button>
+    </form>
+</div>
+
 <div id="title">
     <span></span>
+</div>
+<div id="book_display">
+    <table class="myTable" id="book_table">
+        <thead id="book_head">
+            <tr id="book_column_names">
+                <th>Cours</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Editor</th>
+                <th>ISBN</th>
+                <th>URL</th>
+                <th>Language</th>
+            </tr>
+        </thead>
+        <tbody id="book_body">
+            <tr id="book_table_rows">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

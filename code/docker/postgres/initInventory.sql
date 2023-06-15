@@ -234,30 +234,6 @@ INSERT INTO associated_to_AB (author_id, book_id) VALUES (2, 2);
 
 
 
-
-CREATE OR REPLACE FUNCTION inserer_donnees(ma_variable1 text)
-    RETURNS void as
-$BODY$
-    -- Instructions SQL pour l'insertion des données
-    INSERT INTO nom_de_la_table (colonne1, colonne2, ...)
-    VALUES (ma_variable1, ma_variable2, ...);
-$BODY$
-    LANGUAGE sql;
-
-SELECT inserer_donnees('valeur1', 'valeur2', ...);
-
-
-
-
-
-insert into book(sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id, image_id,field_id)
-values ('GEN145', 2, 'C++ in One Hour a Day, Sams Teach Yourself - 8th Ed.',9780789757746, 2, 2, '2016-12-28', 1, 'https://usherbrooke.coop/fr/boutique/categories/genie-informatique-8154/c-in-one-hour-a-day-sams-teach-yourself---8th-ed-1923433',2 ,2,1);
-
-
-
-
-
-
 CREATE VIEW recherche_par_autheur_view AS
 SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data
 FROM ap
@@ -327,7 +303,6 @@ SELECT * FROM recherche_par_programme_view where program_label='Génie Informati
 
 
 CREATE view recherche_par_sigle_view AS
-
 SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data
 FROM ap
          JOIN book ON ap.sigle = book.sigle
@@ -339,4 +314,29 @@ FROM ap
 SELECT book_label, codeISBN, author_label, sigle, program_label, data
 FROM recherche_par_sigle_view
 WHERE sigle = 'GEN230';
+
+CREATE VIEW inserer_dans_ap_view AS
+SELECT ap.sigle, ap.label, p.program_id, b.book_id, b.codeISBN, a.author_id, e.editor_id, b.publicationDate, f.format_id, b.URL, l.language_id, b.field_id
+FROM ap
+         JOIN program p ON ap.program_id = p.program_id
+         JOIN book b ON ap.sigle = b.sigle
+         JOIN author a ON b.author_id = a.author_id
+         JOIN editor e ON b.editor_id = e.editor_id
+         JOIN format f ON b.format_id = f.format_id
+         JOIN language l ON b.language_id = l.language_id;
+
+
+
+INSERT INTO book (sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id, field_id)
+SELECT 'GIF371', (SELECT COALESCE(MAX(book_id), 0) + 1 FROM book), 'Titre du livre', 9191834567890, 1, 1, '2023-06-01', 1, 'https://example.com', 1, 1
+WHERE NOT EXISTS (
+    SELECT 1 FROM book WHERE sigle = 'GIF371'
+);
+
+
+
+
+
+
+
 

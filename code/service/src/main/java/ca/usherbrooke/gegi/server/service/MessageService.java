@@ -4,6 +4,7 @@ import ca.usherbrooke.gegi.server.business.Message;
 import ca.usherbrooke.gegi.server.persistence.MessageMapper;
 import org.jsoup.parser.Parser;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -36,6 +37,7 @@ public class MessageService {
 
 	@GET
 	@Path("getallmessages")
+	@PermitAll
 	public List<Message> getAllMessages(
 	) {
 		List<Message> messages = messageMapper.allMessages();
@@ -44,6 +46,7 @@ public class MessageService {
 
 	@GET
 	@Path("getmessage/{id}")
+	@PermitAll
 	public Message getMessage(
 			@PathParam("id") Integer id
 	) {
