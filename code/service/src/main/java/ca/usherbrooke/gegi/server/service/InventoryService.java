@@ -82,7 +82,6 @@ public class InventoryService {
         return book;
     }
 
-
     @GET
     @Path("/listBooksFromProgram/{program}")
     @PermitAll
