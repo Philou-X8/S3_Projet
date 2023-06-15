@@ -1,6 +1,6 @@
 #docker/
 #service/
-service/.gradle
+service/.gradle/*
 service/build
 build
 service/out
@@ -11,4 +11,4 @@ out
 *.iml
 *.iws
 
-/service/.gradle/
+/service/.gradle/*
