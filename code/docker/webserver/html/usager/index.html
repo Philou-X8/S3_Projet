@@ -7,11 +7,18 @@
     <script src="testFunctions.js"></script>
     <script src="bookSearch.js"></script>
 
+    <style>
+        .myTable { background-color:#eee;border-collapse:collapse; }
+        .myTable th { background-color:#000;color:white; }
+        .myTable td, .myTable th { padding:5px;border:1px solid #000; }
+    </style>
+
 </head>
 <body onload="initKeycloak()">
 <button onclick="requestStudent()">Étudiant?</button>
 <button onclick="requestTeacher()">Enseignant?</button>
 <button onclick="requestFuniButton()">Funi button</button>
+<button onclick="requestAllBook()">Get all books</button>
 <div>
     <form>
         <label>Book ID:</label>
@@ -26,12 +33,35 @@
         <button type="button" id="button_sigle" onclick="requestFromSigle()">Register</button>
     </form>
 </div>
-<!--<form><label for="codeISBN">ISBN:</label>-->
-<!--    <input type="text" id="codeISBN" name="code_isbn"/>-->
-<!--    <button id= "btnsub" onclick="requestISBN()">Register</button></form>-->
 
 <div id="title">
     <span></span>
+</div>
+<div id="book_display">
+    <table class="myTable" id="book_table">
+        <thead id="book_head">
+            <tr id="book_column_names">
+                <th>Cours</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Editor</th>
+                <th>ISBN</th>
+                <th>URL</th>
+                <th>Language</th>
+            </tr>
+        </thead>
+        <tbody id="book_body">
+            <tr id="book_table_rows">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
