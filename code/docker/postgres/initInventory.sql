@@ -76,6 +76,7 @@ CREATE TABLE image
 );
 insert into image(values (1, '/images/1.jpg'));
 insert into image(values (2, '/images/C++ in One Hour a Day, Sams Teach Yourself - 8th Ed.jpg'));
+
 CREATE TABLE language
 (
     language_id INT NOT NULL,
@@ -151,19 +152,21 @@ CREATE TABLE book
     --1 = francais
     --2 = anglais
 
-
+    field_id int not null ,
     PRIMARY KEY (book_id),
     FOREIGN KEY (format_id) REFERENCES format(format_id),
     FOREIGN KEY (language_id) REFERENCES language(language_id),
     FOREIGN KEY (author_id) REFERENCES author(author_id),
     FOREIGN KEY (editor_id) REFERENCES editor(editor_id),
+    FOREIGN KEY (field_id) REFERENCES field(field_id) ,
     UNIQUE (codeISBN)
 );
-INSERT INTO book (sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id, image_id)
-values ('GEN230', 1, 'Électrotechnique - 4e éd.',9782763781853, 1, 1, '2007-08-01', 1, 'https://usherbrooke.coop/fr/boutique/categories/livres-scolaires-8110/electrotechnique---4e-ed-1899232', 1, 1);
-insert into book(values ('GEN145', 2, 'C++ in One Hour a Day, Sams Teach Yourself - 8th Ed.',9780789757746, 2, 2, '2016-12-28', 1, 'https://usherbrooke.coop/fr/boutique/categories/genie-informatique-8154/c-in-one-hour-a-day-sams-teach-yourself---8th-ed-1923433',2 ,2));
-delete from book where book_id = 2;
-
+INSERT INTO book (sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id, image_id,field_id)
+values ('GEN230', 1, 'Électrotechnique - 4e éd.',9782763781853, 1, 1, '2007-08-01', 1, 'https://usherbrooke.coop/fr/boutique/categories/livres-scolaires-8110/electrotechnique---4e-ed-1899232', 1, 1,1);
+insert into book(sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id, image_id,field_id)
+values ('GEN145', 2, 'C++ in One Hour a Day, Sams Teach Yourself - 8th Ed.',9780789757746, 2, 2, '2016-12-28', 1, 'https://usherbrooke.coop/fr/boutique/categories/genie-informatique-8154/c-in-one-hour-a-day-sams-teach-yourself---8th-ed-1923433',2 ,2,1);
+/*delete from book where book_id = 2;
+*/
 CREATE TABLE associated_to
 (
     book_Id INT NOT NULL,
@@ -180,14 +183,7 @@ CREATE TABLE associated__to
     FOREIGN KEY (programId) REFERENCES program(program_id),
     FOREIGN KEY (sigle) REFERENCES ap(sigle)
 );
-CREATE TABLE associated_to
-(
-    book_id INT NOT NULL,
-    sigle varchar NOT NULL,
-    PRIMARY KEY (book_id, sigle),
-    FOREIGN KEY (book_id) REFERENCES book(book_id),
-    FOREIGN KEY (sigle) REFERENCES ap(sigle)
-);
+
 
 CREATE TABLE content
 (
@@ -211,7 +207,7 @@ CREATE TABLE associated_to_LB
 );
 INSERT INTO associated_to_LB (language_id, book_id) values (1, 1);
 INSERT INTO associated_to_LB (language_id, book_id) values (2, 2);
-;
+
 CREATE TABLE associated_to_EB
 (
     editor_id INT NOT NULL,
@@ -235,4 +231,112 @@ CREATE TABLE associated_to_AB
 
 INSERT INTO associated_to_AB (author_id, book_id) VALUES (1, 1);
 INSERT INTO associated_to_AB (author_id, book_id) VALUES (2, 2);
+
+
+
+
+CREATE OR REPLACE FUNCTION inserer_donnees(ma_variable1 text)
+    RETURNS void as
+$BODY$
+    -- Instructions SQL pour l'insertion des données
+    INSERT INTO nom_de_la_table (colonne1, colonne2, ...)
+    VALUES (ma_variable1, ma_variable2, ...);
+$BODY$
+    LANGUAGE sql;
+
+SELECT inserer_donnees('valeur1', 'valeur2', ...);
+
+
+
+
+
+insert into book(sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id, image_id,field_id)
+values ('GEN145', 2, 'C++ in One Hour a Day, Sams Teach Yourself - 8th Ed.',9780789757746, 2, 2, '2016-12-28', 1, 'https://usherbrooke.coop/fr/boutique/categories/genie-informatique-8154/c-in-one-hour-a-day-sams-teach-yourself---8th-ed-1923433',2 ,2,1);
+
+
+
+
+
+
+CREATE VIEW recherche_par_autheur_view AS
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data
+FROM ap
+         JOIN book ON ap.sigle = book.sigle
+         JOIN field ON book.field_id = field.field_id
+         JOIN author ON book.author_id = author.author_id
+         JOIN program ON ap.program_id = program.program_id
+         JOIN image ON book.image_id = image.image_id;
+
+
+SELECT * FROM recherche_par_autheur_view WHERE author_label = 'Siddhartha RAO';
+
+
+CREATE VIEW recherche_par_ISBN_view AS
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data
+FROM ap
+         JOIN book ON ap.sigle = book.sigle
+         JOIN field ON book.field_id = field.field_id
+         JOIN author ON book.author_id = author.author_id
+         JOIN program ON ap.program_id = program.program_id
+         JOIN image ON book.image_id = image.image_id;
+
+SELECT * FROM recherche_par_ISBN_view WHERE codeISBN = '9782763781853';
+
+
+CREATE view recherche_par_departement_view AS
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data, field.label
+FROM ap
+         JOIN book ON ap.sigle = book.sigle
+         JOIN field ON book.field_id = field.field_id
+         JOIN author ON book.author_id = author.author_id
+         JOIN program ON ap.program_id = program.program_id
+         JOIN image ON book.image_id = image.image_id;
+
+/* Test unitaire */
+SELECT book_label, codeISBN, author_label, sigle, program_label, data
+FROM recherche_par_departement_view
+WHERE label = 'Génie';
+
+
+CREATE VIEW recherche_par_ap_view AS
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data,ap.label
+FROM ap
+         JOIN book ON ap.sigle = book.sigle
+         JOIN field ON book.field_id = field.field_id
+         JOIN author ON book.author_id = author.author_id
+         JOIN program ON ap.program_id = program.program_id
+         JOIN image ON book.image_id = image.image_id;
+
+/* Test unitaire */
+SELECT book_label, codeISBN, author_label, sigle, program_label, data
+FROM recherche_par_ap_view
+WHERE label = 'Atelier de programmation';
+
+
+CREATE view recherche_par_programme_view AS
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data
+FROM ap
+         JOIN book ON ap.sigle = book.sigle
+         JOIN field ON book.field_id = field.field_id
+         JOIN author ON book.author_id = author.author_id
+         JOIN program ON ap.program_id = program.program_id
+         JOIN image ON book.image_id = image.image_id;
+/*test unitaires 01*/
+
+SELECT * FROM recherche_par_programme_view where program_label='Génie Information';
+
+
+CREATE view recherche_par_sigle_view AS
+
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data
+FROM ap
+         JOIN book ON ap.sigle = book.sigle
+         JOIN field ON book.field_id = field.field_id
+         JOIN author ON book.author_id = author.author_id
+         JOIN program ON ap.program_id = program.program_id
+         JOIN image ON book.image_id = image.image_id;
+/* Test unitaire */
+SELECT book_label, codeISBN, author_label, sigle, program_label, data
+FROM recherche_par_sigle_view
+WHERE sigle = 'GEN230';
 
