@@ -2,6 +2,23 @@
   "realm": "usager",
   "users": [
     {
+      "username": "admin",
+      "enabled": true,
+      "firstName": "admin",
+      "lastName": "admin",
+      "email": "",
+      "realmRoles": [
+        "admin",
+        "default-roles-master"
+      ],
+      "credentials": [
+        {
+          "temporary": true,
+          "type": "password",
+          "value": "admin"
+        }
+      ]
+    },{
       "username": "bour0703",
       "enabled": true,
       "firstName": "Raphaël",
