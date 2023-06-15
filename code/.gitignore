@@ -11,4 +11,5 @@ out
 *.iml
 *.iws
 
-/service/.gradle/*
+./service/.gradle/
+code/service/.gradle/
