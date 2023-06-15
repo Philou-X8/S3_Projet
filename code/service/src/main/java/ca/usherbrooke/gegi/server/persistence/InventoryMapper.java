@@ -11,5 +11,8 @@ import java.util.List;
 public interface InventoryMapper {
 
     Book getBook();
+    List<Book> getBookAll();
     Book getBookISBN(Long isbn);
+    Book getBookFromID(Integer idBook);
+    Book getBookFromSigle(String sigle);
 }
