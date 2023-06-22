@@ -6,4 +6,6 @@ public final class Roles {
     public static final String TEACHER = "teacher";
     public static final String DEFAULT = "default-roles-master";
 
+    public static final String ADMIN = "admin";
+
 }

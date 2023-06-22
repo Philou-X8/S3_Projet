@@ -21,7 +21,17 @@
     </select>
 
     <select id="getBookAll" resultType="ca.usherbrooke.gegi.server.business.Book">
-        select *
+        select sigle,
+               book_id,
+               label,
+               codeisbn,
+               author_id,
+               editor_id,
+               publicationdate,
+               format_id,
+               url,
+               language_id,
+               image_id
         from public.book
         order by label desc;
     </select>
@@ -72,6 +82,18 @@
                image_id
         from public.book
         where sigle = #{sigleBook};
+    </select>
+
+    <select id="requestBooksFromProgram" resultType="ca.usherbrooke.gegi.server.business.ListedBooks">
+        select book_label,
+               codeisbn,
+               author_label,
+               sigle,
+               program_label,
+               data
+        from recherche_par_programme_view
+        where program_label= #{program}
+        order by program_label desc;
     </select>
 
 
