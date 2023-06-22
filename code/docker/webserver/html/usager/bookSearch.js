@@ -76,7 +76,7 @@ function requestFromSigle() {
 }
 
 function requestAllBook() {
-    const div = document.getElementById('title');
+    const div = document.getElementById('edit_pan');
     const span = div.firstElementChild;
 
     axios.get("http://localhost:8888/api/getBookAll", {
