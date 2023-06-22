@@ -1,3 +1,4 @@
+CREATE EXTENSION unaccent;
 
 CREATE TABLE field
 (

@@ -55,7 +55,7 @@ public class InventoryService {
         List<Book> books = inventoryMapper.getBookAll();
         System.out.println("All book requested");
 
-        listBooksFromProgram("Genie");
+        listBooksFromProgram("genie");
         return books;
     }
 
@@ -97,7 +97,7 @@ public class InventoryService {
         System.out.println("listBooksFromProgram, raw param received: " + programURL); // print
         String program = URLDecoder.decode(programURL, StandardCharsets.UTF_8);
         System.out.println("listBooksFromProgram, formated param received: " + program); // print
-        List<ListedBooks> books = inventoryMapper.requestBooksFromProgram("Gé");
+        List<ListedBooks> books = inventoryMapper.requestBooksFromProgram(program);
         //if(books == null) books = new ArrayList<ListedBooks>();
         System.out.println(books);
         return books;
