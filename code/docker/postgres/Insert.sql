@@ -423,7 +423,7 @@ insert into image(values(28,'/images/9782766108206.jpg'));
 
 
 
-insert into associated_SigleToProgram(values ('GEI100',1));
+insert into  (values ('GEI100',1));
 insert into associated_SigleToProgram(values ('GEI105',1));
 insert into associated_SigleToProgram(values ('GEI120',1));
 insert into associated_SigleToProgram(values ('GEI130',1));

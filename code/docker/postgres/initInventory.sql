@@ -56,24 +56,12 @@ CREATE TABLE author
     PRIMARY KEY (author_id)
 );
 
-CREATE TABLE associated_to_AB
-(
-    author_id INT NOT NULL,
-    book_id INT NOT NULL,
-    PRIMARY KEY (author_id, book_id),
-    FOREIGN KEY (author_id) REFERENCES author(author_id),
-    FOREIGN KEY (book_id) REFERENCES book(book_id)
-);
-
-
 CREATE TABLE typeformat
 (
     typeformat_id INT     NOT NULL,
     label         varchar NOT NULL,
     PRIMARY KEY (typeformat_id)
 );
-
-
 
 CREATE TABLE format
 (
@@ -85,12 +73,6 @@ CREATE TABLE format
     PRIMARY KEY (format_id),
     FOREIGN KEY (typeformat_id) REFERENCES typeformat(typeformat_id)
 );
---1 = papier
---2 = pdf
---3 = Epub
---4 = site Internet
---5 = person"
-
 
 CREATE TABLE book
 (
@@ -121,6 +103,27 @@ CREATE TABLE book
     FOREIGN KEY (field_id) REFERENCES field(field_id) ,
     UNIQUE (codeISBN)
 );
+CREATE TABLE associated_to_AB
+(
+    author_id INT NOT NULL,
+    book_id INT NOT NULL,
+    PRIMARY KEY (author_id, book_id),
+    FOREIGN KEY (author_id) REFERENCES author(author_id),
+    FOREIGN KEY (book_id) REFERENCES book(book_id)
+);
+
+
+
+
+
+
+--1 = papier
+--2 = pdf
+--3 = Epub
+--4 = site Internet
+--5 = person"
+
+
 INSERT INTO book (sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id, image_id,field_id)
 values ('GEN230', 1, 'Électrotechnique - 4e éd.',9782763781853, 1, 1, '2007-08-01', 1, 'https://usherbrooke.coop/fr/boutique/categories/livres-scolaires-8110/electrotechnique---4e-ed-1899232', 1, 1,1);
 insert into book(sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id, image_id,field_id)
