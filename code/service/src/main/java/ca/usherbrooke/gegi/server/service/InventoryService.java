@@ -1,8 +1,11 @@
 package ca.usherbrooke.gegi.server.service;
 
 import ca.usherbrooke.gegi.server.business.Book;
+import ca.usherbrooke.gegi.server.business.ListedBooks;
 import ca.usherbrooke.gegi.server.business.Message;
 import ca.usherbrooke.gegi.server.business.Person;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.security.PermitAll;
@@ -45,6 +48,9 @@ public class InventoryService {
     @PermitAll
     public List<Book> getBookAll() {
         List<Book> books = inventoryMapper.getBookAll();
+        System.out.println("All book requested");
+
+        listBooksFromProgram("Génie Information");
         return books;
     }
 
@@ -75,5 +81,20 @@ public class InventoryService {
         System.out.println("SQL return : ISBN : " + book.codeisbn.toString()); // print
         return book;
     }
+
+    @GET
+    @Path("/listBooksFromProgram/{program}")
+    @PermitAll
+    public List<ListedBooks> listBooksFromProgram(
+            @PathParam("program") String program
+    ) {
+        System.out.println("listBooksFromProgram, param received: " + program); // print
+        List<ListedBooks> books = inventoryMapper.requestBooksFromProgram("Génie Information");
+        //if(books == null) books = new ArrayList<ListedBooks>();
+        System.out.println(books);
+        return books;
+    }
+
+
 
 }
