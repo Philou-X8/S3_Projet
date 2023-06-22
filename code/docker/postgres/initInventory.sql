@@ -65,14 +65,12 @@ CREATE TABLE associated_to_AB
     FOREIGN KEY (book_id) REFERENCES book(book_id)
 );
 
-
 CREATE TABLE typeformat
 (
     typeformat_id INT     NOT NULL,
     label         varchar NOT NULL,
     PRIMARY KEY (typeformat_id)
 );
-
 
 
 CREATE TABLE format
@@ -131,28 +129,6 @@ values ('GEN145', 2, 'C++ in One Hour a Day, Sams Teach Yourself - 8th Ed.',9780
 --values ('GEN230', 1, 'Électrotechnique - 4e éd.',9782763781853, 1, 1, '2007-08-01', 1, 'https://usherbrooke.coop/fr/boutique/categories/livres-scolaires-8110/electrotechnique---4e-ed-1899232', 1, 1);
 --insert into book(values ('GEN145', 2, 'C++ in One Hour a Day, Sams Teach Yourself - 8th Ed.',9780789757746, 2, 2, '2016-12-28', 1, 'https://usherbrooke.coop/fr/boutique/categories/genie-informatique-8154/c-in-one-hour-a-day-sams-teach-yourself---8th-ed-1923433',2 ,2));
 --insert into book(values ('GEL345', 3, 'Power System Analysis and Design, 6e Edition, SI Edition', 9781305632134, null, null, '2017-00-00', 1, null, 2 ,null));
-
-insert into author(values (1,'Gilbert SYBILLE'));
-insert into author(values (2,'Théodore WILDI'));
-insert into author(values (3,'Siddhartha RAO'));
-insert into author(values (4,'J. Duncan Glover'));
-insert into author(values (5,'Thomas Overbye'));
-insert into author(values (6,'Mulukutla Sarma'));
-
-insert into format(values (1, 'Papier', 1));
-insert into format(values (2, 'PDF', 2));
-insert into format(values (3, 'Epub', 2));
-insert into format(values (4, 'site Internet', 2));
-insert into format(values (5, 'Person', 2));
-
-insert into typeformat(values (1,'Papier'));
-insert into typeformat(values (2,'Digital'));
-
-insert into editor(values (1,'PUL - Presses U. de Laval'));
-insert into editor(values (2,'SAMS'));
-
-
-
 
 CREATE TABLE associated_bookID_sigle
 

@@ -387,6 +387,25 @@ insert into ap(values('GIF390','Systemes informatiques repartis'));
 insert into ap(values('GEI199','Circuits logiques et electroniques numeriques'));
 
 
+insert into author(values (1,'Gilbert SYBILLE'));
+insert into author(values (2,'Théodore WILDI'));
+insert into author(values (3,'Siddhartha RAO'));
+insert into author(values (4,'J. Duncan Glover'));
+insert into author(values (5,'Thomas Overbye'));
+insert into author(values (6,'Mulukutla Sarma'));
+
+insert into format(values (1, 'Papier', 1));
+insert into format(values (2, 'PDF', 2));
+insert into format(values (3, 'Epub', 2));
+insert into format(values (4, 'site Internet', 2));
+insert into format(values (5, 'Person', 2));
+
+insert into typeformat(values (1,'Papier'));
+insert into typeformat(values (2,'Digital'));
+
+insert into editor(values (1,'PUL - Presses U. de Laval'));
+insert into editor(values (2,'SAMS'));
+
 insert into language(values ( 1, 'Français'));
 insert into language(values ( 2, 'Anglais'));
 insert into language(values ( 3, 'Espagnol'));
