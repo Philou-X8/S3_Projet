@@ -12,3 +12,4 @@ out
 *.iws
 
 /service/.gradle/*
+/Liste_vrai.csv
