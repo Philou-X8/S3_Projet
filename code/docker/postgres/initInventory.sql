@@ -235,7 +235,7 @@ INSERT INTO associated_to_AB (author_id, book_id) VALUES (2, 2);
 
 
 CREATE VIEW recherche_par_autheur_view AS
-SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data,book.URL
 FROM ap
          JOIN book ON ap.sigle = book.sigle
          JOIN field ON book.field_id = field.field_id
@@ -248,7 +248,7 @@ SELECT * FROM recherche_par_autheur_view WHERE author_label = 'Siddhartha RAO';
 
 
 CREATE VIEW recherche_par_ISBN_view AS
-SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data, book.URL
 FROM ap
          JOIN book ON ap.sigle = book.sigle
          JOIN field ON book.field_id = field.field_id
@@ -260,7 +260,7 @@ SELECT * FROM recherche_par_ISBN_view WHERE codeISBN = '9782763781853';
 
 
 CREATE view recherche_par_departement_view AS
-SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data, field.label
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data, field.label,book.URL
 FROM ap
          JOIN book ON ap.sigle = book.sigle
          JOIN field ON book.field_id = field.field_id
@@ -275,7 +275,7 @@ WHERE label = 'Génie';
 
 
 CREATE VIEW recherche_par_ap_view AS
-SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data,ap.label
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data,ap.label, book.URL
 FROM ap
          JOIN book ON ap.sigle = book.sigle
          JOIN field ON book.field_id = field.field_id
@@ -290,7 +290,7 @@ WHERE label = 'Atelier de programmation';
 
 
 CREATE view recherche_par_programme_view AS
-SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data, book.URL
 FROM ap
          JOIN book ON ap.sigle = book.sigle
          JOIN field ON book.field_id = field.field_id
@@ -303,7 +303,7 @@ SELECT * FROM recherche_par_programme_view where program_label='Génie Informati
 
 
 CREATE view recherche_par_sigle_view AS
-SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data
+SELECT book.label AS book_label, book.codeISBN, author.label AS author_label, ap.sigle, program.label AS program_label, image.data, book.URL
 FROM ap
          JOIN book ON ap.sigle = book.sigle
          JOIN field ON book.field_id = field.field_id
@@ -316,25 +316,20 @@ FROM recherche_par_sigle_view
 WHERE sigle = 'GEN230';
 
 CREATE VIEW inserer_dans_ap_view AS
-SELECT ap.sigle, ap.label, p.program_id, b.book_id, b.codeISBN, a.author_id, e.editor_id, b.publicationDate, f.format_id, b.URL, l.language_id, b.field_id
+SELECT ap.sigle, ap.label, p.program_id, b.book_id, b.codeISBN, a.author_id, e.editor_id, b.publicationDate, f.format_id, b.URL, l.language_id, b.field_id, i.data
 FROM ap
          JOIN program p ON ap.program_id = p.program_id
          JOIN book b ON ap.sigle = b.sigle
          JOIN author a ON b.author_id = a.author_id
          JOIN editor e ON b.editor_id = e.editor_id
          JOIN format f ON b.format_id = f.format_id
+         JOIN image  i ON b.image_id = i.image_id
          JOIN language l ON b.language_id = l.language_id;
-
 
 
 INSERT INTO book (sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id, field_id)
 SELECT 'GIF371', (SELECT COALESCE(MAX(book_id), 0) + 1 FROM book), 'Titre du livre', 9191834567890, 1, 1, '2023-06-01', 1, 'https://example.com', 1, 1
-WHERE NOT EXISTS (
-    SELECT 1 FROM book WHERE sigle = 'GIF371'
-);
-
-
-
+WHERE NOT EXISTS ( SELECT 1 FROM book WHERE sigle = 'GIF371');
 
 
 
