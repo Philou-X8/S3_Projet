@@ -1,3 +1,4 @@
+
 CREATE TABLE field
 (
     field_id INT NOT NULL,

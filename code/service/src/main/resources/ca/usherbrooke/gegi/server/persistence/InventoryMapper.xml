@@ -92,7 +92,7 @@
                program_label,
                data
         from recherche_par_programme_view
-        where program_label= #{program}
+        where program_label like ('%' || #{program} || '%')
         order by program_label desc;
     </select>
 
