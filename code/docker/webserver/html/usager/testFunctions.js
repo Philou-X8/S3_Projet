@@ -124,7 +124,7 @@ function editMode() {
     })
 
         .then(function (response){
-            span.innerHTML = '<br><strong>'+"You are admin"+'<strong><br>'
+            span.innerHTML = '<br><strong> <input type="text" id="title" placeholder="Les pierres a feu" > <input type="text" id="author" placeholder="Fred Caillou"> <input type="button" id="add" name="ajouter" value="Ajouter" onclick="addBook()"  ><strong><br>'
         })
 
 
