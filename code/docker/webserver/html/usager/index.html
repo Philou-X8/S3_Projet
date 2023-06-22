@@ -63,24 +63,29 @@
         </tbody>
     </table>
 
-   <style>
-       .align-right{
-           text-align: right;
-           border: 0;
-       }
-   </style>
-</div>
-<form><div> <div class="align-right" >
 
-    <input type="radio" name="roleMode" id="ViewerMode" onclick="viewerMode()">
+</div>
+<style>
+    .align-right{
+        text-align: right;
+        border: 0;
+    }
+</style>
+
+<form> <div id="viewer_div" class="align-right" >
+
+    <input id="ViewerMode" name="roleMode" onclick="viewerMode()" checked   type="radio" />
     <label for="ViewerMode">Viewer Mode</label>
 </div>
-<div> <div class="align-right">
-    <input type="radio" name="roleMode" id="EditMode" onchange="EditMode()">
+<div class="align-right" id="edit_div">
+    <input type="radio" name="roleMode" id="EditMode" onclick="editMode()" >
     <label for="EditMode">Edit mode</label>
-</div><div class="align-right">
+</div>
+
 
 </form>
-
+<div id="edit_pan">
+    <span>fsgdg</span>
+</div>
 </body>
 </html>

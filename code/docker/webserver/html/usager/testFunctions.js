@@ -80,6 +80,54 @@ function requestFuniButton() {
     span.innerHTML = '<br> <strong>' + "Loading..." + '</strong> </br>'
 }
 
+
 function viewerMode() {
- span.innerHTML = '<label>Error</label>'
+    const div = document.getElementById('edit_pan');
+    const span  = div.firstElementChild;
+
+
+    axios.get("http://localhost:8888/api/viewer", {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+
+        .then(function (response) {
+            console.log("Response: ", response.status);
+            span.innerHTML = '<br> <strong>' + "insert table here" + '</strong> </br>';
+
+        })
+
+        .catch(function (error){
+            keycloak.updateToken(5).then(function (){
+                console.log("Token Refresh");
+            })
+        })
+
+            span.innerHTML = '<br> <strong>' + "Pas admin"+'</strong> <br>'
+
+
+
+}
+
+function editMode() {
+
+    const id = 'edit_pan';
+
+    const div = document.getElementById(id);
+    const span = div.firstElementChild;
+
+    axios.get("http://localhost:8888/api/editer", {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+
+        .then(function (response){
+            span.innerHTML = '<br><strong> <input type="text" id="title" placeholder="Les pierres a feu" > <input type="text" id="author" placeholder="Fred Caillou"> <input type="button" id="add" name="ajouter" value="Ajouter" onclick="addBook()"  ><strong><br>'
+        })
+
+
+    span.innerHTML = '<br> <strong>' + "Pas admin"+'</strong> <br>'
+
 }
