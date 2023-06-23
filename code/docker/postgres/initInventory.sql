@@ -306,7 +306,7 @@ FROM insert_book_view;
 
 
 
-/*test unitaires 01*/
+/*test unitaires 01
 
 
 
@@ -328,7 +328,7 @@ FROM ap
          JOIN author a ON b.author_id = a.author_id
          JOIN editor e ON b.editor_id = e.editor_id
          JOIN format f ON b.format_id = f.format_id
-         JOIN language l ON b.language_id = l.language_id;
+         JOIN language l ON b.language_id = l.language_id;*/
 
 
 
