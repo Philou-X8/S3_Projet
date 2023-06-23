@@ -150,59 +150,23 @@ CREATE TABLE associated_to_EB
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
 CREATE VIEW recherche_par_autheur_view AS
 SELECT book.label    AS book_label,
        book.codeISBN,
        author.label  AS author_label,
        ap.sigle,
-       program.label AS program_label,
-       image.data
+       program.label AS program_label
 FROM ap
-         JOIN book ON ap.sigle = book.sigle
+         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
+         JOIN book ON associated_to_SB.book_id = book.book_id
          JOIN field ON book.field_id = field.field_id
-         JOIN author ON book.author_id = author.author_id
-         JOIN associated_Sigle_Program ON associated_Sigle_Program.sigle = ap.sigle
-         JOIN program ON associated_Sigle_Program.program_id = program.program_id
-         JOIN image ON book.image_id = image.image_id;
-
-
+         JOIN associated_to_ab on book.book_id = associated_to_AB.book_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+        JOIN program on field.field_id = program.field_id
+        /*JOIN program ON associated_Sigle_Program.program_id = program.program_id*/;
 SELECT *
 FROM recherche_par_autheur_view
-WHERE author_label = 'Siddhartha RAO';
+WHERE author_label = 'Gilbert SYBILLE';
 
 
 CREATE VIEW recherche_par_ISBN_view AS
@@ -210,19 +174,18 @@ SELECT book.label    AS book_label,
        book.codeISBN,
        author.label  AS author_label,
        ap.sigle,
-       program.label AS program_label,
-       image.data
+        program.label AS program_label
 FROM ap
-         JOIN book ON ap.sigle = book.sigle
+         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
+         JOIN book ON associated_to_SB.book_id = book.book_id
          JOIN field ON book.field_id = field.field_id
-         JOIN author ON book.author_id = author.author_id
-         JOIN associated_Sigle_Program ON ap.sigle = associated_Sigle_Program.sigle
-         JOIN program ON associated_Sigle_Program.program_id = program.program_id
-         JOIN image ON book.image_id = image.image_id;
+         Join associated_to_AB on book.book_id = associated_to_AB.book_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+         JOIN program on field.field_id = program.field_id;
 
 SELECT *
 FROM recherche_par_ISBN_view
-WHERE codeISBN = '9782763781853';
+WHERE codeISBN = '97813056321';
 
 
 CREATE view recherche_par_departement_view AS
@@ -231,20 +194,19 @@ SELECT book.label    AS book_label,
        author.label  AS author_label,
        ap.sigle,
        program.label AS program_label,
-       image.data,
        field.label
 FROM ap
-         JOIN book ON ap.sigle = book.sigle
+         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
+         JOIN book ON associated_to_SB.book_id = book.book_id
          JOIN field ON book.field_id = field.field_id
-         JOIN author ON book.author_id = author.author_id
-         JOIN associated_Sigle_Program ON ap.sigle = associated_Sigle_Program.sigle
-         JOIN program ON associated_Sigle_Program.program_id = program.program_id
-         JOIN image ON book.image_id = image.image_id;
+         Join associated_to_AB on book.book_id = associated_to_AB.book_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+         JOIN program on field.field_id = program.field_id;
 
 /* Test unitaire */
-SELECT book_label, codeISBN, author_label, sigle, program_label, data
+SELECT book_label, codeISBN, author_label, sigle/*, program_label, data*/
 FROM recherche_par_departement_view
-WHERE label = 'Génie';
+WHERE label = 'Genie';
 
 
 CREATE VIEW recherche_par_ap_view AS
@@ -253,23 +215,41 @@ SELECT ap.label      AS ap_label,
        book.codeISBN,
        author.label  AS author_label,
        ap.sigle,
-       program.label AS program_label,
-       image.data
+       program.label AS program_label
 FROM ap
-         JOIN associated_Sigle_Program ON ap.sigle = associated_Sigle_Program.sigle
-         JOIN program ON associated_Sigle_Program.program_id = program.program_id
-         JOIN book ON ap.sigle = book.sigle
-         JOIN author ON book.author_id = author.author_id
-         JOIN image ON book.image_id = image.image_id;
+
+         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
+         JOIN book ON associated_to_SB.book_id = book.book_id
+         JOIN field ON book.field_id = field.field_id
+         Join associated_to_AB on book.book_id = associated_to_AB.book_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+         JOIN program on field.field_id = program.field_id;
 
 
 /* Test unitaire */
-SELECT book_label, codeISBN, author_label, sigle, program_label, data
+SELECT book_label, codeISBN, author_label, sigle, program_label
 FROM recherche_par_ap_view
-WHERE ap_label = 'Atelier de programmation';
+WHERE ap_label = 'Bases de donnees';
 
+CREATE view recherche_par_sigle_view AS
 
-/*test unitaires 01*/
+SELECT book.label    AS book_label,
+       book.codeISBN,
+       author.label  AS author_label,
+       ap.sigle as sigle,
+       program.label AS program_label
+
+FROM ap
+         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
+         JOIN book ON associated_to_SB.book_id = book.book_id
+         JOIN field ON book.field_id = field.field_id
+         Join associated_to_AB on book.book_id = associated_to_AB.book_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+         JOIN program on field.field_id = program.field_id;
+/* Test unitaire */
+SELECT book_label, codeISBN, author_label, sigle, program_label/*, data*/
+FROM recherche_par_sigle_view
+WHERE sigle = 'GEL345';
 
 
 CREATE VIEW recherche_par_programme_view AS
@@ -277,37 +257,58 @@ SELECT book.label    AS book_label,
        book.codeISBN,
        author.label  AS author_label,
        ap.sigle,
-       program.label AS program_label,
-       image.data
+       program.label AS program_label
+
 FROM ap
-         JOIN book ON ap.sigle = book.sigle
+         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
+         JOIN book ON associated_to_SB.book_id = book.book_id
          JOIN field ON book.field_id = field.field_id
-         JOIN author ON book.author_id = author.author_id
-         JOIN associated_Sigle_Program ON ap.sigle = associated_Sigle_Program.sigle
-         JOIN program ON associated_Sigle_Program.program_id = program.program_id
-         JOIN image ON book.image_id = image.image_id;
+         Join associated_to_AB on book.book_id = associated_to_AB.book_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+         JOIN program on field.field_id = program.field_id;
 
 SELECT *
 FROM recherche_par_programme_view
-where program_label = 'Génie Information';
-CREATE view recherche_par_sigle_view AS
-SELECT book.label    AS book_label,
-       book.codeISBN,
-       author.label  AS author_label,
-       ap.sigle,
-       program.label AS program_label,
-       image.data
-FROM ap
-         JOIN book ON ap.sigle = book.sigle
-         JOIN field ON book.field_id = field.field_id
-         JOIN author ON book.author_id = author.author_id
-         JOIN associated_Sigle_Program ON ap.sigle = associated_Sigle_Program.sigle
-         JOIN program ON associated_Sigle_Program.program_id = program.program_id
-         JOIN image ON book.image_id = image.image_id;
-/* Test unitaire */
-SELECT book_label, codeISBN, author_label, sigle, program_label, data
-FROM recherche_par_sigle_view
-WHERE sigle = 'GEN230';
+where program_label = 'Genie Informatique';
+
+INSERT INTO book (book_id, label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id)
+SELECT 24,
+       'Titre du livre',
+       9191834567890,
+       '2023-06-01',
+       1,
+       'https://example.com',
+       1,
+       1,
+       1
+FROM book
+WHERE book_id = 1
+HAVING COUNT(*) = 0;
+
+CREATE OR REPLACE VIEW insert_book_view AS
+SELECT
+        COALESCE(MAX(b.book_id), 0) + 1 AS book_id,
+        label,
+        codeISBN,
+         publicationDate,
+        format_id,
+        URL,
+        language_id,
+        image_id,
+        field_id
+FROM
+    book b
+group by label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id ;
+
+INSERT INTO book (book_id, label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id)
+SELECT 23, 'Titre du livre', 64747326472, '2024-02-14', 1, 'https://example.com', 1, 1, 1
+FROM insert_book_view;
+
+
+
+/*test unitaires 01*/
+
+
 
 CREATE VIEW inserer_dans_ap_view AS
 SELECT ap.sigle,
@@ -330,22 +331,7 @@ FROM ap
          JOIN language l ON b.language_id = l.language_id;
 
 
-INSERT INTO book (sigle, book_id, label, codeISBN, author_id, editor_id, publicationDate, format_id, URL, language_id,
-                  field_id)
-SELECT 'GIF371',
-       (SELECT COALESCE(MAX(book_id), 0) + 1 FROM book),
-       'Titre du livre',
-       9191834567890,
-       1,
-       1,
-       '2023-06-01',
-       1,
-       'https://example.com',
-       1,
-       1 WHERE NOT EXISTS (
-    SELECT 1 FROM book WHERE sigle = 'GIF371'
-);
- */
+
 
 
 
