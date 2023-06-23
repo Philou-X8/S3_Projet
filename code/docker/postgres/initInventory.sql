@@ -146,42 +146,6 @@ CREATE TABLE associated_to_EB
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
 CREATE VIEW recherche_par_autheur_view AS
 SELECT book.label    AS book_label,
        book.codeISBN,
@@ -197,7 +161,7 @@ FROM ap
          JOIN program ON associated_Sigle_Program.program_id = program.program_id
          JOIN image ON book.image_id = image.image_id;
 
-
+/*
 SELECT *
 FROM recherche_par_autheur_view
 WHERE author_label = 'Siddhartha RAO';

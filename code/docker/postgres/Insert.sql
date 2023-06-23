@@ -416,10 +416,10 @@ insert into language(values ( 5, 'Allemand'));
 insert into image(values(1,'/images/9781305632134.jpg'));
 insert into image(values(2,'/images/9782100809356.jpg'));
 insert into image(values(3,'/images/9781943153183.jpg'));
-insert into image(values(6,'/images/None.jpg'));
 insert into image(values(4,'/images/9782744075216.jpg'));
 insert into image(values(5,'/images/9780190853464.jpg'));
 insert into image(values(6,'/images/9782890943377.jpg'));
+
 insert into image(values(7,'/images/9781578201242.jpg'));
 insert into image(values(8,'/images/9782100555642.jpg'));
 insert into image(values(9,'/images/9780131194571.jpg'));
