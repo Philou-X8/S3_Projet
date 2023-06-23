@@ -147,7 +147,7 @@ CREATE TABLE associated_to_EB
 );
 
 
-
+/*
 CREATE VIEW recherche_par_autheur_view AS
 SELECT book.label    AS book_label,
        book.codeISBN,

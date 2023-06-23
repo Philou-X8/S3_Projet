@@ -419,7 +419,6 @@ insert into image(values(3,'/images/9781943153183.jpg'));
 insert into image(values(4,'/images/9782744075216.jpg'));
 insert into image(values(5,'/images/9780190853464.jpg'));
 insert into image(values(6,'/images/9782890943377.jpg'));
-
 insert into image(values(7,'/images/9781578201242.jpg'));
 insert into image(values(8,'/images/9782100555642.jpg'));
 insert into image(values(9,'/images/9780131194571.jpg'));
@@ -1112,7 +1111,7 @@ insert into associated_to_SP(values ('GIN665',1));
 insert into associated_to_SP(values ('GIN666',1));
 
 
-INSERT INTO book (book_id,label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id) VALUES (1, 'Power System Analysis and Design  6e Edition', '97813056321', '2017-01-01', 1, 'nan', 2, 1) ON CONFLICT DO NOTHING;
+INSERT INTO book (book_id,label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id) VALUES (1, 'Power Sys4444e54tem Analysis and Design  6e Edition', '97813056321', '2017-01-01', 1, 'nan', 2, 1) ON CONFLICT DO NOTHING;
 INSERT INTO associated_to_SB (book_id, sigle) VALUES (1, 'GEL345') ON CONFLICT DO NOTHING;
 INSERT INTO author (author_id, label) VALUES (1, 'J. Duncan Glover') ON CONFLICT DO NOTHING;
 INSERT INTO associated_to_AB (author_id, book_id) VALUES (1, 1) ON CONFLICT DO NOTHING;
