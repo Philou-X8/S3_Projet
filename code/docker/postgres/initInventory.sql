@@ -266,50 +266,14 @@ FROM ap
          Join associated_to_AB on book.book_id = associated_to_AB.book_id
          JOIN author ON associated_to_AB.author_id = author.author_id
          JOIN program on field.field_id = program.field_id;
-
 SELECT *
 FROM recherche_par_programme_view
 where program_label = 'Genie Informatique';
 
-INSERT INTO book (book_id, label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id)
-SELECT 24,
-       'Titre du livre',
-       9191834567890,
-       '2023-06-01',
-       1,
-       'https://example.com',
-       1,
-       1,
-       1
-FROM book
-WHERE book_id = 1
-HAVING COUNT(*) = 0;
-
-CREATE OR REPLACE VIEW insert_book_view AS
-SELECT
-        COALESCE(MAX(b.book_id), 0) + 1 AS book_id,
-        label,
-        codeISBN,
-         publicationDate,
-        format_id,
-        URL,
-        language_id,
-        image_id,
-        field_id
-FROM
-    book b
-group by label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id ;
-
-INSERT INTO book (book_id, label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id)
-SELECT 23, 'Titre du livre', 64747326472, '2024-02-14', 1, 'https://example.com', 1, 1, 1
-FROM insert_book_view;
 
 
 
 /*test unitaires 01
-
-
-
 CREATE VIEW inserer_dans_ap_view AS
 SELECT ap.sigle,
        ap.label,
@@ -330,22 +294,19 @@ FROM ap
          JOIN format f ON b.format_id = f.format_id
          JOIN language l ON b.language_id = l.language_id;*/
 
+-- Créer la vue add_book_view
+CREATE VIEW add_bookS_view AS
+SELECT (SELECT COALESCE(MAX(book_id), 0) FROM book) + ROW_NUMBER() OVER () AS book_id,
+       label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id
+FROM book;
 
+-- Créer la règle insert_book_rule
+CREATE RULE insert_book_rule AS
+    ON INSERT TO add_bookS_view
+    DO INSTEAD
+    INSERT INTO book (book_id, label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id)
+    SELECT NEW.book_id, NEW.label, NEW.codeISBN, NEW.publicationDate, NEW.format_id, NEW.URL, NEW.language_id, NEW.image_id, NEW.field_id;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- Insérer un nouveau livre en utilisant la vue add_book_view
+INSERT INTO add_bookS_view (book_id, label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id)
+VALUES ((SELECT COALESCE(MAX(book_id), 0) FROM book) + 1, 'Nouveau livre', 1234567890, '2023-06-24', 1, 'https://example.com', 1, 1, 1);
