@@ -15,7 +15,7 @@
     </style>
 
 </head>
-<body onload="initKeycloak()">
+<body onload="start()" >
 <button onclick="requestStudent()">Étudiant?</button>
 <button onclick="requestTeacher()">Enseignant?</button>
 <button onclick="requestFuniButton()">Funi button</button>
@@ -87,8 +87,8 @@
 </form>
 <div id="edit_pan">
     <span>
-        <input type="text" id="in_title" placeholder="Les pierres a feu" hidden >
-        <input type="text" id="in_author" hidden placeholder="Fred Caillou">
+        <input type="text" id="in_title" placeholder="Titre de l'ouvrage"  hidden >
+        <input type="text" id="in_author" hidden placeholder="Auteur">
         <input id="add_btn" name="ajouter" hidden="" type="button" value="Ajouter" onclick="addBook()" >
 
     </span>

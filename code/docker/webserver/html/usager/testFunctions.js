@@ -1,4 +1,11 @@
 
+function start(){
+    initKeycloak();
+    editMode();
+
+}
+
+
 function requestStudent() {
     const div = document.getElementById('title');
     const span = div.firstElementChild;
@@ -125,6 +132,9 @@ function editMode() {
             document.getElementById('add_btn').hidden=false;
 
 
+        })
+        .catch(function (error){
+            alert("error en loadant edit mode");
         });
 
 

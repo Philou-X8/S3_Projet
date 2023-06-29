@@ -107,7 +107,7 @@ public class InventoryService {
     @Path("/addBook")
     @RolesAllowed("admin")
     public void addBook(String title, String author){
-        System.out.println("method called");
+        System.out.println("method called \n title = " + title + " author = "+author );
 
     }
 
