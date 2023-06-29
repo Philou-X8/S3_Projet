@@ -12,3 +12,7 @@ out
 *.iws
 
 /service/.gradle/*
+/Liste_vrai.csv
+./service/.gradle
+code/service/.gradle
+code/service/out

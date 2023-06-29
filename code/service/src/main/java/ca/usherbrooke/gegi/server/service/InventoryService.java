@@ -5,6 +5,8 @@ import ca.usherbrooke.gegi.server.business.ListedBooks;
 import ca.usherbrooke.gegi.server.business.Message;
 import ca.usherbrooke.gegi.server.business.Person;
 
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,9 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import ca.usherbrooke.gegi.server.persistence.MessageMapper;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.jsoup.parser.Parser;
+
+import java.net.URI;
+import java.net.URLDecoder;
 
 @Path("/api")
 @Produces({"application/json"})
@@ -50,7 +55,7 @@ public class InventoryService {
         List<Book> books = inventoryMapper.getBookAll();
         System.out.println("All book requested");
 
-        listBooksFromProgram("Génie Information");
+        listBooksFromProgram("genie");
         return books;
     }
 
@@ -86,10 +91,13 @@ public class InventoryService {
     @Path("/listBooksFromProgram/{program}")
     @PermitAll
     public List<ListedBooks> listBooksFromProgram(
-            @PathParam("program") String program
+            @PathParam("program") String programURL
+            //@PathParam("program") String program
     ) {
-        System.out.println("listBooksFromProgram, param received: " + program); // print
-        List<ListedBooks> books = inventoryMapper.requestBooksFromProgram("Génie Information");
+        System.out.println("listBooksFromProgram, raw param received: " + programURL); // print
+        String program = URLDecoder.decode(programURL, StandardCharsets.UTF_8);
+        System.out.println("listBooksFromProgram, formated param received: " + program); // print
+        List<ListedBooks> books = inventoryMapper.requestBooksFromProgram(program);
         //if(books == null) books = new ArrayList<ListedBooks>();
         System.out.println(books);
         return books;
