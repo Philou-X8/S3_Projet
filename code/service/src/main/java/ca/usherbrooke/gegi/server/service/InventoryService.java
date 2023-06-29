@@ -95,6 +95,14 @@ public class InventoryService {
         return books;
     }
 
+    @GET
+    @Path("/addBook")
+    @RolesAllowed("admin")
+    public void addBook(String title, String author){
+        System.out.println("method called");
+
+    }
+
 
 
 }

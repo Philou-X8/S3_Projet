@@ -91,10 +91,11 @@ function viewerMode() {
             'Authorization': 'Bearer ' + keycloak.token
         }
     })
+        .then(function (response){
+            document.getElementById('in_author').hidden=true;
+            document.getElementById('in_title').hidden=true;
+            document.getElementById('add_btn').hidden=true;
 
-        .then(function (response) {
-            console.log("Response: ", response.status);
-            span.innerHTML = '<br> <strong>' + "insert table here" + '</strong> </br>';
 
         })
 
@@ -104,7 +105,7 @@ function viewerMode() {
             })
         })
 
-            span.innerHTML = '<br> <strong>' + "Pas admin"+'</strong> <br>'
+
 
 
 
@@ -112,22 +113,19 @@ function viewerMode() {
 
 function editMode() {
 
-    const id = 'edit_pan';
-
-    const div = document.getElementById(id);
-    const span = div.firstElementChild;
-
     axios.get("http://localhost:8888/api/editer", {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token
         }
     })
+        .then(function (response) {
 
-        .then(function (response){
-            span.innerHTML = '<br><strong> <input type="text" id="title" placeholder="Les pierres a feu" > <input type="text" id="author" placeholder="Fred Caillou"> <input type="button" id="add" name="ajouter" value="Ajouter" onclick="addBook()"  ><strong><br>'
-        })
+            document.getElementById('in_author').hidden=false;
+            document.getElementById('in_title').hidden=false;
+            document.getElementById('add_btn').hidden=false;
 
 
-    span.innerHTML = '<br> <strong>' + "Pas admin"+'</strong> <br>'
+        });
+
 
 }

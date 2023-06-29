@@ -6,6 +6,7 @@
     <script src="keycloakAuth.js"></script>
     <script src="testFunctions.js"></script>
     <script src="bookSearch.js"></script>
+    <script src="dbEditing.js"></script>
 
     <style>
         .myTable { background-color:#eee;border-collapse:collapse; }
@@ -85,7 +86,12 @@
 
 </form>
 <div id="edit_pan">
-    <span>fsgdg</span>
+    <span>
+        <input type="text" id="in_title" placeholder="Les pierres a feu" hidden >
+        <input type="text" id="in_author" hidden placeholder="Fred Caillou">
+        <input id="add_btn" name="ajouter" hidden="" type="button" value="Ajouter" onclick="addBook()" >
+
+    </span>
 </div>
 </body>
 </html>
