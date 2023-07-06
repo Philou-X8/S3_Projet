@@ -294,7 +294,6 @@ FROM ap
          JOIN format f ON b.format_id = f.format_id
          JOIN language l ON b.language_id = l.language_id;*/
 
--- Créer la vue add_book_view
 CREATE VIEW add_bookS_view AS
 SELECT (SELECT COALESCE(MAX(book_id), 0) FROM book) + ROW_NUMBER() OVER () AS book_id,
        label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id
@@ -302,6 +301,7 @@ FROM book;
 
 -- Créer la règle insert_book_rule
 CREATE RULE insert_book_rule AS
+
     ON INSERT TO add_bookS_view
     DO INSTEAD
     INSERT INTO book (book_id, label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id)
@@ -310,3 +310,23 @@ CREATE RULE insert_book_rule AS
 -- Insérer un nouveau livre en utilisant la vue add_book_view
 INSERT INTO add_bookS_view (book_id, label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id)
 VALUES ((SELECT COALESCE(MAX(book_id), 0) FROM book) + 1, 'Nouveau livre', 1234567890, '2023-06-24', 1, 'https://example.com', 1, 1, 1);
+
+
+-- une vue pour retourner tous les detail d'un livre
+CREATE VIEW book_details AS
+SELECT b.book_id, b.label AS book_label, b.codeISBN, b.publicationDate, f.label AS format_label, b.URL, l.label AS language_label,
+       i.data AS image_data, fi.label AS field_label, a.label AS author_label, e.label AS editor_label
+FROM book b
+         JOIN format f ON b.format_id = f.format_id
+         LEFT JOIN language l ON b.language_id = l.language_id
+         LEFT JOIN image i ON b.image_id = i.image_id
+         JOIN field fi ON b.field_id = fi.field_id
+         JOIN associated_to_AB atab ON b.book_id = atab.book_id
+         JOIN author a ON atab.author_id = a.author_id
+         JOIN associated_to_EB ateb ON b.book_id = ateb.book_id
+         JOIN editor e ON ateb.editor_id = e.editor_id;
+
+SELECT * FROM book_details WHERE book_id = 23 ;
+
+
+
