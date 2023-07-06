@@ -147,7 +147,9 @@ CREATE TABLE associated_to_EB
 );
 
 
-
+------------------------------------------------
+--                   VIEWS                    --
+------------------------------------------------
 
 
 CREATE VIEW recherche_par_autheur_view AS
@@ -232,14 +234,13 @@ SELECT book_label, isbn_label, author_label, sigle_label, program_label
 FROM recherche_par_ap_view
 WHERE ap_label = 'Bases de donnees';
 
-CREATE view recherche_par_sigle_view AS
 
+CREATE view recherche_par_sigle_view AS
 SELECT book.label    AS book_label,
        book.codeISBN AS isbn_label,
        author.label  AS author_label,
        ap.sigle      AS sigle_label,
        program.label AS program_label
-
 FROM ap
          JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
          JOIN book ON associated_to_SB.book_id = book.book_id

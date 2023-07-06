@@ -18,17 +18,17 @@ public interface InventoryMapper {
     //Book getBookFromSigle(String sigle);
 
     List<ListedBooks> requestBooksFromID(int id);
+    List<ListedBooks> requestBooksFromTitle(String title);
+    List<ListedBooks> requestBooksFromIsbn(Long isbn);
     List<ListedBooks> requestBooksFromSigle(String sigle);
-    List<ListedBooks> requestBooksFromAutor();
     List<ListedBooks> requestBooksFromProgram(String program);
-    List<ListedBooks> requestBooksFromAP();
+    List<ListedBooks> requestBooksFromAP(String topic);
     List<ListedBooks> requestBooksFromLanguage(String language);
+    List<ListedBooks> requestBooksFromAuthor(String author);
 
     Book getBookFromTitle(String title);
 
     List<ListedBooks> getBookFromISBN(String isbn);
-
-    List<ListedBooks> requestBooksFromAuthor(String author);
 
     void deleteBook(String bookID);
 }

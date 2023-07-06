@@ -20,84 +20,86 @@
         where book_id = 1;
     </select>
 
-    <select id="getBookAll" resultType="ca.usherbrooke.gegi.server.business.Book">
-        select sigle,
-               book_id,
-               label,
-               codeisbn,
-               author_id,
-               editor_id,
-               publicationdate,
-               format_id,
-               url,
-               language_id,
-               image_id
-        from public.book
-        order by label desc;
-    </select>
 
-    <select id="getBookISBN" resultType="ca.usherbrooke.gegi.server.business.Book">
-        select sigle,
-               book_id,
-               label,
-               codeisbn,
-               author_id,
-               editor_id,
-               publicationdate,
-               format_id,
-               url,
-               language_id,
-               image_id
-        from public.book
-        where codeisbn = #{isbn};
-    </select>
-
-    <select id="getBookFromID" resultType="ca.usherbrooke.gegi.server.business.Book">
-        select sigle,
-               book_id,
-               label,
-               codeisbn,
-               author_id,
-               editor_id,
-               publicationdate,
-               format_id,
-               url,
-               language_id,
-               image_id
-        from public.book
-        where book_id = #{idBook};
+    <select id="requestBooksFromTitle" resultType="ca.usherbrooke.gegi.server.business.ListedBooks">
+        select book_label,
+               isbn_label,
+               author_label,
+               sigle_label,
+               program_label
+        from recherche_par_programme_view -- change for title
+        where unaccent(LOWER(program_label)) like ('%' || unaccent(LOWER( #{title} )) || '%')
+        order by program_label desc;
     </select>
 
 
-    <select id="getBookFromSigle" resultType="ca.usherbrooke.gegi.server.business.Book">
-        select sigle,
-               book_id,
-               label,
-               codeisbn,
-               author_id,
-               editor_id,
-               publicationdate,
-               format_id,
-               url,
-               language_id,
-               image_id
-        from public.book
-        where sigle = #{sigleBook};
+    <select id="requestBooksFromIsbn" resultType="ca.usherbrooke.gegi.server.business.ListedBooks">
+        select book_label,
+               isbn_label,
+               author_label,
+               sigle_label,
+               program_label
+        from recherche_par_ISBN_view
+        where isbn_label = #{isbn}
+        --where unaccent(LOWER(isbn_label)) like ('%' || unaccent(LOWER( #{isbn} )) || '%')
+        order by isbn_label desc;
+    </select>
+
+    <select id="requestBooksFromSigle" resultType="ca.usherbrooke.gegi.server.business.ListedBooks">
+        select book_label,
+               isbn_label,
+               author_label,
+               sigle_label,
+               program_label
+        from recherche_par_sigle_view
+        where unaccent(LOWER(sigle_label)) like ('%' || unaccent(LOWER( #{sigle} )) || '%')
+        order by sigle_label desc;
     </select>
 
     <select id="requestBooksFromProgram" resultType="ca.usherbrooke.gegi.server.business.ListedBooks">
         select book_label,
-               codeisbn,
+               isbn_label,
                author_label,
-               sigle,
-               program_label,
-               data
+               sigle_label,
+               program_label
         from recherche_par_programme_view
         where unaccent(LOWER(program_label)) like ('%' || unaccent(LOWER( #{program} )) || '%')
         order by program_label desc;
     </select>
-<select id="requesetBookFromLanguage" resultType="ca.usherbrooke.gegi.server.business.ListedBooks">
 
-</select>
+    <select id="requestBooksFromAP" resultType="ca.usherbrooke.gegi.server.business.ListedBooks">
+        select book_label,
+               isbn_label,
+               author_label,
+               sigle_label,
+               program_label
+        from recherche_par_ap_view
+        where unaccent(LOWER(ap_label)) like ('%' || unaccent(LOWER( #{topic} )) || '%')
+        order by ap_label desc;
+    </select>
+
+
+
+    <select id="requestBooksFromAuthor" resultType="ca.usherbrooke.gegi.server.business.ListedBooks">
+        select book_label,
+               isbn_label,
+               author_label,
+               sigle_label,
+               program_label
+        from recherche_par_autheur_view
+        where unaccent(LOWER(author_label)) like ('%' || unaccent(LOWER( #{author} )) || '%')
+        order by author_label desc;
+    </select>
+
+    <select id="requestBooksFromLanguage" resultType="ca.usherbrooke.gegi.server.business.ListedBooks">
+        select book_label,
+               isbn_label,
+               author_label,
+               sigle_label,
+               program_label
+        from recherche_par_ap_view
+        where unaccent(LOWER(ap_label)) like ('%' || unaccent(LOWER( #{language} )) || '%')
+        order by ap_label desc;
+    </select>
 
 </mapper>
