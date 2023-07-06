@@ -23,4 +23,11 @@ public interface InventoryMapper {
     List<ListedBooks> requestBooksFromProgram(String program);
     List<ListedBooks> requestBooksFromAP();
 
+    List<ListedBooks> requestBooksFromLanguage(String language);
+
+    Book getBookFromTitle(String title);
+
+    Book getBookFromISBN(String isbn);
+
+    List<ListedBooks> requestBooksFromAuthor(String author);
 }

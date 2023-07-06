@@ -1,7 +1,7 @@
 
 function start(){
     initKeycloak();
-    editMode();
+    //editMode();
 
 }
 
@@ -102,7 +102,11 @@ function viewerMode() {
             document.getElementById('in_author').hidden=true;
             document.getElementById('in_title').hidden=true;
             document.getElementById('add_btn').hidden=true;
-
+            document.getElementById('in_editor').hidden=true;
+            document.getElementById('in_isbn').hidden=true;
+            document.getElementById('in_url').hidden=true;
+            document.getElementById('in_language').hidden=true;
+            document.getElementById('in_class').hidden=true;
 
         })
 
@@ -130,7 +134,11 @@ function editMode() {
             document.getElementById('in_author').hidden=false;
             document.getElementById('in_title').hidden=false;
             document.getElementById('add_btn').hidden=false;
-
+            document.getElementById('in_editor').hidden=false;
+            document.getElementById('in_isbn').hidden=false;
+            document.getElementById('in_url').hidden=false;
+            document.getElementById('in_language').hidden=false;
+            document.getElementById('in_class').hidden=false;
 
         })
         .catch(function (error){
