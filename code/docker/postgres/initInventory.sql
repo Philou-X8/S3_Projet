@@ -273,11 +273,11 @@ FROM recherche_par_programme_view
 where program_label = 'Genie Informatique';
 
 
-CREATE OR REPLACE VIEW recherche_par_label_view AS
-SELECT book.label AS book_label,
-       book.codeISBN,
-       author.label AS author_label,
-       ap.sigle,
+CREATE OR REPLACE VIEW recherche_par_titre_view AS
+SELECT book.label    AS book_label,
+       book.codeISBN AS isbn_label,
+       author.label  AS author_label,
+       ap.sigle      AS sigle_label,
        program.label AS program_label
 FROM ap
          JOIN associated_to_SB ON ap.sigle = associated_to_SB.sigle
@@ -288,15 +288,24 @@ FROM ap
          JOIN program ON field.field_id = program.field_id;
 
 SELECT *
-FROM recherche_par_label_view
+FROM recherche_par_titre_view
 where book_label = 'Reseaux 5e edition';
+-- TEST
+select book_label,
+       isbn_label,
+       author_label,
+       sigle_label,
+       program_label
+from recherche_par_titre_view -- change for title
+where unaccent(LOWER(book_label)) like ('%' || unaccent(LOWER( 'de' )) || '%')
+order by book_label desc;
 
 
 CREATE OR REPLACE VIEW recherche_par_langue_view AS
-SELECT book.label AS book_label,
-       book.codeISBN,
-       author.label AS author_label,
-       ap.sigle,
+SELECT book.label    AS book_label,
+       book.codeISBN AS isbn_label,
+       author.label  AS author_label,
+       ap.sigle      AS sigle_label,
        program.label AS program_label,
        language.label AS language_label
 FROM ap

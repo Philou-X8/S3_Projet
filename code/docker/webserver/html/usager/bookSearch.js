@@ -154,7 +154,7 @@ function searchFromTitle() {
 
     span.innerHTML = '<br> <strong>' + 'Loading...' + '</strong> </br>';
 
-    axios.get("http://localhost:8888/api/listBooksFromTitle/"+searchKeyword, {
+    axios.get("http://localhost:8888/api/listBooksFromTitle/" + searchKeyword.value, {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token
         }
@@ -167,8 +167,7 @@ function searchFromTitle() {
         })
         .catch(function (error) {
             console.log('refreshing');
-            span.innerHTML = '<br> <strong>' + 'error with the button' + '</strong> </br>' +
-                '<br> <strong>' + error.toString() + '</strong> </br>'
+            span.innerHTML = '<br> <strong>' + 'error with the button: ' + error.toString() + '</strong> </br>'
             keycloak.updateToken(5).then(function () {
                 console.log('Token refreshed');
             }).catch(function () {
@@ -195,12 +194,12 @@ function addBookToList(book){
 
 
     row.insertCell(0).innerHTML = book.book_label;
-    row.insertCell(2).innerHTML = book.author_label;
-    row.insertCell(1).innerHTML = book.isbn_label;
+    row.insertCell(1).innerHTML = book.author_label;
+    row.insertCell(2).innerHTML = book.isbn_label;
     row.insertCell(3).innerHTML = book.sigle_label;
     row.insertCell(4).innerHTML = book.program_label;
-    row.insertCell(5).innerHTML = '<a href="' + book.url + '" target="_blank">COOP</a>';
-    row.insertCell(6).innerHTML = book.language_id;
+    //row.insertCell(5).innerHTML = '<a href="' + book.url + '" target="_blank">COOP</a>';
+    //row.insertCell(6).innerHTML = book.language_id;
 
     //document.getElementById("book_link").setAttribute("href",book.url);
 }

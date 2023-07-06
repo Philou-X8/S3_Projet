@@ -148,6 +148,7 @@ public class InventoryService {
         String title = URLDecoder.decode(titleURL, StandardCharsets.UTF_8);
         System.out.println("listBooksFromTitle, formated param received: " + title); // print
         List<ListedBooks> books = inventoryMapper.requestBooksFromTitle(title);
+        System.out.println(books);
         if(books == null) books = new ArrayList<ListedBooks>();
         System.out.println(books);
         return books;
@@ -235,6 +236,22 @@ public class InventoryService {
         String language = URLDecoder.decode(languageURL, StandardCharsets.UTF_8);
         System.out.println("requestBooksFromLanguage, formated param received: " + language); // print
         List<ListedBooks> books = inventoryMapper.requestBooksFromLanguage(language);
+        if(books == null) books = new ArrayList<ListedBooks>();
+        System.out.println(books);
+        return books;
+    }
+
+    @GET
+    @Path("/requestBooksFromAuthor/{author}")
+    @PermitAll
+    public List<ListedBooks> listBooksFromAuthor(
+            @PathParam("author") String authorURL
+    ) {
+        System.out.println("--------------------------");
+        System.out.println("requestBooksFromAuthor, raw param received: " + authorURL); // print
+        String author = URLDecoder.decode(authorURL, StandardCharsets.UTF_8);
+        System.out.println("requestBooksFromAuthor, formated param received: " + author); // print
+        List<ListedBooks> books = inventoryMapper.requestBooksFromAuthor(author);
         if(books == null) books = new ArrayList<ListedBooks>();
         System.out.println(books);
         return books;

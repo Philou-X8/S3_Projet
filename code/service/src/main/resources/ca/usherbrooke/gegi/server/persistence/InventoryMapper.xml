@@ -27,9 +27,9 @@
                author_label,
                sigle_label,
                program_label
-        from recherche_par_programme_view -- change for title
-        where unaccent(LOWER(program_label)) like ('%' || unaccent(LOWER( #{title} )) || '%')
-        order by program_label desc;
+        from recherche_par_titre_view -- change for title
+        where unaccent(LOWER(book_label)) like ('%' || unaccent(LOWER( #{title} )) || '%')
+        order by book_label desc;
     </select>
 
 
@@ -97,9 +97,9 @@
                author_label,
                sigle_label,
                program_label
-        from recherche_par_ap_view
-        where unaccent(LOWER(ap_label)) like ('%' || unaccent(LOWER( #{language} )) || '%')
-        order by ap_label desc;
+        from recherche_par_langue_view
+        where unaccent(LOWER(language_label)) like ('%' || unaccent(LOWER( #{language} )) || '%')
+        order by language_label desc;
     </select>
 
 </mapper>
