@@ -152,9 +152,9 @@ CREATE TABLE associated_to_EB
 
 CREATE VIEW recherche_par_autheur_view AS
 SELECT book.label    AS book_label,
-       book.codeISBN,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle,
+       ap.sigle      AS sigle_label,
        program.label AS program_label
 FROM ap
          JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
@@ -171,10 +171,10 @@ WHERE author_label = 'Gilbert SYBILLE';
 
 CREATE VIEW recherche_par_ISBN_view AS
 SELECT book.label    AS book_label,
-       book.codeISBN,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle,
-        program.label AS program_label
+       ap.sigle      AS sigle_label,
+       program.label AS program_label
 FROM ap
          JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
          JOIN book ON associated_to_SB.book_id = book.book_id
@@ -185,14 +185,14 @@ FROM ap
 
 SELECT *
 FROM recherche_par_ISBN_view
-WHERE codeISBN = '97813056321';
+WHERE isbn_label = '97813056321';
 
 
 CREATE view recherche_par_departement_view AS
 SELECT book.label    AS book_label,
-       book.codeISBN,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle,
+       ap.sigle      AS sigle_label,
        program.label AS program_label,
        field.label
 FROM ap
@@ -204,18 +204,19 @@ FROM ap
          JOIN program on field.field_id = program.field_id;
 
 /* Test unitaire */
-SELECT book_label, codeISBN, author_label, sigle/*, program_label, data*/
+SELECT book_label, isbn_label, author_label, sigle_label/*, program_label, data*/
 FROM recherche_par_departement_view
 WHERE label = 'Genie';
 
 
 CREATE VIEW recherche_par_ap_view AS
-SELECT ap.label      AS ap_label,
-       book.label    AS book_label,
-       book.codeISBN,
+SELECT book.label    AS book_label,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle,
-       program.label AS program_label
+       ap.sigle      AS sigle_label,
+       program.label AS program_label,
+       ap.label      AS ap_label
+
 FROM ap
 
          JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
@@ -227,16 +228,16 @@ FROM ap
 
 
 /* Test unitaire */
-SELECT book_label, codeISBN, author_label, sigle, program_label
+SELECT book_label, isbn_label, author_label, sigle_label, program_label
 FROM recherche_par_ap_view
 WHERE ap_label = 'Bases de donnees';
 
 CREATE view recherche_par_sigle_view AS
 
 SELECT book.label    AS book_label,
-       book.codeISBN,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle as sigle,
+       ap.sigle      AS sigle_label,
        program.label AS program_label
 
 FROM ap
@@ -247,16 +248,16 @@ FROM ap
          JOIN author ON associated_to_AB.author_id = author.author_id
          JOIN program on field.field_id = program.field_id;
 /* Test unitaire */
-SELECT book_label, codeISBN, author_label, sigle, program_label/*, data*/
+SELECT book_label, isbn_label, author_label, sigle_label, program_label/*, data*/
 FROM recherche_par_sigle_view
-WHERE sigle = 'GEL345';
+WHERE sigle_label = 'GEL345';
 
 
 CREATE VIEW recherche_par_programme_view AS
 SELECT book.label    AS book_label,
-       book.codeISBN,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle,
+       ap.sigle      AS sigle_label,
        program.label AS program_label
 
 FROM ap
@@ -269,6 +270,48 @@ FROM ap
 SELECT *
 FROM recherche_par_programme_view
 where program_label = 'Genie Informatique';
+
+
+CREATE OR REPLACE VIEW recherche_par_label_view AS
+SELECT book.label AS book_label,
+       book.codeISBN,
+       author.label AS author_label,
+       ap.sigle,
+       program.label AS program_label
+FROM ap
+         JOIN associated_to_SB ON ap.sigle = associated_to_SB.sigle
+         JOIN book ON associated_to_SB.book_id = book.book_id
+         JOIN field ON book.field_id = field.field_id
+         JOIN associated_to_AB ON book.book_id = associated_to_AB.book_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+         JOIN program ON field.field_id = program.field_id;
+
+SELECT *
+FROM recherche_par_label_view
+where book_label = 'Reseaux 5e edition';
+
+
+CREATE OR REPLACE VIEW recherche_par_langue_view AS
+SELECT book.label AS book_label,
+       book.codeISBN,
+       author.label AS author_label,
+       ap.sigle,
+       program.label AS program_label,
+       language.label AS language_label
+FROM ap
+         JOIN associated_to_SB ON ap.sigle = associated_to_SB.sigle
+         JOIN book ON associated_to_SB.book_id = book.book_id
+         JOIN field ON book.field_id = field.field_id
+         JOIN associated_to_AB ON book.book_id = associated_to_AB.book_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+         JOIN program ON field.field_id = program.field_id
+         JOIN language ON book.language_id = language.language_id;
+
+SELECT *
+FROM recherche_par_langue_view
+WHERE language_label = 'Anglais';
+
+
 
 
 
@@ -294,7 +337,6 @@ FROM ap
          JOIN format f ON b.format_id = f.format_id
          JOIN language l ON b.language_id = l.language_id;*/
 
--- Créer la vue add_book_view
 CREATE VIEW add_bookS_view AS
 SELECT (SELECT COALESCE(MAX(book_id), 0) FROM book) + ROW_NUMBER() OVER () AS book_id,
        label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id
@@ -302,6 +344,7 @@ FROM book;
 
 -- Créer la règle insert_book_rule
 CREATE RULE insert_book_rule AS
+
     ON INSERT TO add_bookS_view
     DO INSTEAD
     INSERT INTO book (book_id, label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id)
@@ -310,3 +353,22 @@ CREATE RULE insert_book_rule AS
 -- Insérer un nouveau livre en utilisant la vue add_book_view
 INSERT INTO add_bookS_view (book_id, label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id)
 VALUES ((SELECT COALESCE(MAX(book_id), 0) FROM book) + 1, 'Nouveau livre', 1234567890, '2023-06-24', 1, 'https://example.com', 1, 1, 1);
+
+
+-- une vue pour retourner tous les detail d'un livre
+CREATE VIEW book_details AS
+SELECT b.book_id, b.label AS book_label, b.codeISBN, b.publicationDate, f.label AS format_label, b.URL, l.label AS language_label,
+       i.data AS image_data, fi.label AS field_label, a.label AS author_label, e.label AS editor_label
+FROM book b
+         JOIN format f ON b.format_id = f.format_id
+         LEFT JOIN language l ON b.language_id = l.language_id
+         LEFT JOIN image i ON b.image_id = i.image_id
+         JOIN field fi ON b.field_id = fi.field_id
+         JOIN associated_to_AB atab ON b.book_id = atab.book_id
+         JOIN author a ON atab.author_id = a.author_id
+         JOIN associated_to_EB ateb ON b.book_id = ateb.book_id
+         JOIN editor e ON ateb.editor_id = e.editor_id;
+
+SELECT * FROM book_details WHERE book_id = 23 ;
+
+

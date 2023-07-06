@@ -1,4 +1,11 @@
 
+function start(){
+    initKeycloak();
+    //editMode();
+
+}
+
+
 function requestStudent() {
     const div = document.getElementById('title');
     const span = div.firstElementChild;
@@ -91,10 +98,17 @@ function viewerMode() {
             'Authorization': 'Bearer ' + keycloak.token
         }
     })
-
-        .then(function (response) {
-            console.log("Response: ", response.status);
-            span.innerHTML = '<br> <strong>' + "insert table here" + '</strong> </br>';
+        .then(function (response){
+            document.getElementById('in_author').hidden=true;
+            document.getElementById('in_title').hidden=true;
+            document.getElementById('add_btn').hidden=true;
+            document.getElementById('in_editor').hidden=true;
+            document.getElementById('in_isbn').hidden=true;
+            document.getElementById('in_url').hidden=true;
+            document.getElementById('in_language').hidden=true;
+            document.getElementById('in_class').hidden=true;
+            document.getElementById('in_BookID').hidden=true;
+            document.getElementById('delete_btn').hidden=true;
 
         })
 
@@ -104,7 +118,7 @@ function viewerMode() {
             })
         })
 
-            span.innerHTML = '<br> <strong>' + "Pas admin"+'</strong> <br>'
+
 
 
 
@@ -112,22 +126,29 @@ function viewerMode() {
 
 function editMode() {
 
-    const id = 'edit_pan';
-
-    const div = document.getElementById(id);
-    const span = div.firstElementChild;
-
     axios.get("http://localhost:8888/api/editer", {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token
         }
     })
+        .then(function (response) {
 
-        .then(function (response){
-            span.innerHTML = '<br><strong> <input type="text" id="title" placeholder="Les pierres a feu" > <input type="text" id="author" placeholder="Fred Caillou"> <input type="button" id="add" name="ajouter" value="Ajouter" onclick="addBook()"  ><strong><br>'
+            document.getElementById('in_author').hidden=false;
+            document.getElementById('in_title').hidden=false;
+            document.getElementById('add_btn').hidden=false;
+            document.getElementById('in_editor').hidden=false;
+            document.getElementById('in_isbn').hidden=false;
+            document.getElementById('in_url').hidden=false;
+            document.getElementById('in_language').hidden=false;
+            document.getElementById('in_class').hidden=false;
+            document.getElementById('in_BookID').hidden=false;
+            document.getElementById('delete_btn').hidden=false;
+
         })
+        .catch(function (error){
+            alert("error en loadant edit mode");
+        });
 
-
-    span.innerHTML = '<br> <strong>' + "Pas admin"+'</strong> <br>'
 
 }
+

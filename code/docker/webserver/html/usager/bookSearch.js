@@ -1,4 +1,27 @@
 
+function requestFromAuthor(){
+    var auth = document.getElementById('author_in').value;
+    alert(auth)
+    axios.get("http://localhost:8888/api/listBooksFromAuthor/"+auth,{
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function(response){})
+        .catch(function (error){
+            alert(error.toString())
+        })
+}
+
+function requestFromLanguage(){
+    var language = document.getElementById('language_in').value;
+    axios.get("http://localhost:8888/api/getBookFromLanguage/"+language, {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+}
+
 function printBookInfo(book){
     const span = document.getElementById('title').firstElementChild;
     var urlLink = book.url.toString();
@@ -13,6 +36,21 @@ function printBookInfo(book){
         ', Langue: ' + book.language_id +
         ', Format: ' + book.format_id + '</br>'
     document.getElementById("book_link").setAttribute("href",urlLink);
+}
+
+function requestFromISBN(){
+    const div = document.getElementById('title');
+    var isbnBook = document.getElementById('isbn_in').value;
+    const span = div.firstElementChild;
+
+    axios.get("http://localhost:8888/api/")
+
+}function requestFromTitle(){
+    const div = document.getElementById('title');
+    var titleBook = document.getElementById('in_title_search').value;
+    const span = div.firstElementChild;
+
+    axios.get("http://localhost:8888/api/")
 }
 function requestFromID() {
     const div = document.getElementById('title');
