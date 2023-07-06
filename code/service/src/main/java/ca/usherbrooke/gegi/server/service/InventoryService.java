@@ -59,6 +59,8 @@ public class InventoryService {
         listBooksFromProgram("genie");
         return books;
     }
+
+    /**************** OLD ****************/
     @GET
     @Path("/getBookFromLanguage/{language}")
     @PermitAll
@@ -78,7 +80,10 @@ public class InventoryService {
         //inventoryMapper.deleteBook(bookID);
 
 
-    }    @GET
+    }
+
+    /**************** OLD ****************/
+    @GET
     @Path("/getBookFromTitle/{titleBook}")
     @PermitAll
     public Book getBookfromTitle(@PathParam("titleBook") String title){
@@ -89,6 +94,7 @@ public class InventoryService {
         return book;
     }
 
+    /**************** OLD ****************/
     @GET
     @Path("/getBookFromID/{idBook}")
     @PermitAll
@@ -103,6 +109,7 @@ public class InventoryService {
     }
 
 
+    /**************** OLD ****************/
     @GET
     @Path("/getBookFromSigle/{sigleBook}")
     @PermitAll
@@ -116,6 +123,7 @@ public class InventoryService {
         return book;
     }
 
+    /**************** OLD ****************/
     @GET
     @Path("/getBookFromISBN/{isbn}")
     @PermitAll
@@ -124,6 +132,22 @@ public class InventoryService {
         Book book = inventoryMapper.getBookFromISBN(isbn);
         if(book==null) book=new Book();
         return book;
+    }
+
+    @GET
+    @Path("/listBooksFromTitle/{title}")
+    @PermitAll
+    public List<ListedBooks> listBooksFromTitle(
+            @PathParam("title") String titleURL
+            //@PathParam("program") String program
+    ) {
+        System.out.println("listBooksFromTitle, raw param received: " + titleURL); // print
+        String title = URLDecoder.decode(titleURL, StandardCharsets.UTF_8);
+        System.out.println("listBooksFromProgram, formated param received: " + title); // print
+        List<ListedBooks> books = inventoryMapper.requestBooksFromTitle(title);
+        if(books == null) books = new ArrayList<ListedBooks>();
+        System.out.println(books);
+        return books;
     }
 
     @GET

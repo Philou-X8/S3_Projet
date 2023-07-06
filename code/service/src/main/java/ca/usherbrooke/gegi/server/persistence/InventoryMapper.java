@@ -22,7 +22,7 @@ public interface InventoryMapper {
     List<ListedBooks> requestBooksFromIsbn(String isbn);
     List<ListedBooks> requestBooksFromSigle(String sigle);
     List<ListedBooks> requestBooksFromProgram(String program);
-    List<ListedBooks> requestBooksFromAP(String program);
+    List<ListedBooks> requestBooksFromAP(String topic);
 
     List<ListedBooks> requestBooksFromLanguage(String language);
 
