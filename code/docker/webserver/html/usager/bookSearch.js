@@ -203,3 +203,185 @@ function addBookToList(book){
 
     //document.getElementById("book_link").setAttribute("href",book.url);
 }
+
+
+function searchFromIsbn() {
+    const div = document.getElementById('title');
+    const span = div.firstElementChild;
+    var searchKeyword = document.getElementById('isbn_in');
+
+    span.innerHTML = '<br> <strong>' + 'Loading...' + '</strong> </br>';
+
+    axios.get("http://localhost:8888/api/listBooksFromIsbn/"+searchKeyword, {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+            resetBookTable();
+            response.data.forEach(addBookToList);
+            span.innerHTML = '<br> <strong>' + 'Search Complete' + '</strong> </br>';
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            span.innerHTML = '<br> <strong>' + 'error with the button' + '</strong> </br>' +
+                '<br> <strong>' + error.toString() + '</strong> </br>'
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+        });
+}
+function searchFromSigle() {
+    const div = document.getElementById('title');
+    const span = div.firstElementChild;
+    var searchKeyword = document.getElementById('sigle_in');
+
+    span.innerHTML = '<br> <strong>' + 'Loading...' + '</strong> </br>';
+
+    axios.get("http://localhost:8888/api/listBooksFromSigle/"+searchKeyword, {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+            resetBookTable();
+            response.data.forEach(addBookToList);
+            span.innerHTML = '<br> <strong>' + 'Search Complete' + '</strong> </br>';
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            span.innerHTML = '<br> <strong>' + 'error with the button' + '</strong> </br>' +
+                '<br> <strong>' + error.toString() + '</strong> </br>'
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+        });
+}
+
+function searchFromProgram() {
+    const div = document.getElementById('title');
+    const span = div.firstElementChild;
+    var searchKeyword = document.getElementById('program_in');
+
+    span.innerHTML = '<br> <strong>' + 'Loading...' + '</strong> </br>';
+
+    axios.get("http://localhost:8888/api/listBooksFromProgram/"+searchKeyword, {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+            resetBookTable();
+            response.data.forEach(addBookToList);
+            span.innerHTML = '<br> <strong>' + 'Search Complete' + '</strong> </br>';
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            span.innerHTML = '<br> <strong>' + 'error with the button' + '</strong> </br>' +
+                '<br> <strong>' + error.toString() + '</strong> </br>'
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+        });
+}
+
+function searchFromAP() {
+    const div = document.getElementById('title');
+    const span = div.firstElementChild;
+    var searchKeyword = document.getElementById('ap_in');
+
+    span.innerHTML = '<br> <strong>' + 'Loading...' + '</strong> </br>';
+
+    axios.get("http://localhost:8888/api/listBooksFromAP/"+searchKeyword, {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+            resetBookTable();
+            response.data.forEach(addBookToList);
+            span.innerHTML = '<br> <strong>' + 'Search Complete' + '</strong> </br>';
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            span.innerHTML = '<br> <strong>' + 'error with the button' + '</strong> </br>' +
+                '<br> <strong>' + error.toString() + '</strong> </br>'
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+        });
+}
+
+
+function searchFromLanguage() {
+    const div = document.getElementById('title');
+    const span = div.firstElementChild;
+    var searchKeyword = document.getElementById('language_in');
+
+    span.innerHTML = '<br> <strong>' + 'Loading...' + '</strong> </br>';
+
+    axios.get("http://localhost:8888/api/listBooksFromLanguage/"+searchKeyword, {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+            resetBookTable();
+            response.data.forEach(addBookToList);
+            span.innerHTML = '<br> <strong>' + 'Search Complete' + '</strong> </br>';
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            span.innerHTML = '<br> <strong>' + 'error with the button' + '</strong> </br>' +
+                '<br> <strong>' + error.toString() + '</strong> </br>'
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+        });
+}
+
+
+    function searchFromAuthor() {
+        const div = document.getElementById('title');
+        const span = div.firstElementChild;
+        var searchKeyword = document.getElementById('author_in');
+
+        span.innerHTML = '<br> <strong>' + 'Loading...' + '</strong> </br>';
+
+        axios.get("http://localhost:8888/api/listBooksFromAuthor/"+searchKeyword, {
+            headers: {
+                'Authorization': 'Bearer ' + keycloak.token
+            }
+        })
+            .then(function (response) {
+                console.log("Response: ", response.status);
+                resetBookTable();
+                response.data.forEach(addBookToList);
+                span.innerHTML = '<br> <strong>' + 'Search Complete' + '</strong> </br>';
+            })
+            .catch(function (error) {
+                console.log('refreshing');
+                span.innerHTML = '<br> <strong>' + 'error with the button' + '</strong> </br>' +
+                    '<br> <strong>' + error.toString() + '</strong> </br>'
+                keycloak.updateToken(5).then(function () {
+                    console.log('Token refreshed');
+                }).catch(function () {
+                    console.log('Failed to refresh token');
+                })
+            });
+    }
