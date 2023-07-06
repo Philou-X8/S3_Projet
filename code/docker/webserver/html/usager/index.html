@@ -111,8 +111,8 @@
 
 
 </form>
-<div id="edit_pan">
-    <span>
+<div id="add_pan">
+    <form>
         <input type="text" id="in_class" placeholder="Cours" hidden>
         <input type="text" id="in_title" placeholder="Titre de l'ouvrage"  hidden >
         <input type="text" id="in_author" hidden placeholder="Auteur">
@@ -120,10 +120,18 @@
         <input type="text" id="in_isbn" hidden placeholder="ISBN">
         <input type="text" id="in_url" hidden placeholder="URL">
         <input type="text" id="in_language" hidden placeholder="Langue">
-        <input id="add_btn" name="ajouter" hidden="" type="button" value="Ajouter" onclick="addBook()" >
+        <input id="add_btn" name="ajouter" hidden type="button" value="Ajouter" onclick="addBook()" >
+
+    </form>
 
 
-    </span>
 </div>
+<div id="Delete_pan">
+    <form>
+        <input type="text" id="in_BookID" placeholder="Book ID" hidden>
+        <input id="delete_btn" name="supprimer" hidden type="button" value="Supprimer" onclick="deleteBook()">
+    </form>
+</div>
+
 </body>
 </html>
