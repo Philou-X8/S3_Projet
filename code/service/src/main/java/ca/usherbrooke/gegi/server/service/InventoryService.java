@@ -104,7 +104,6 @@ public class InventoryService {
         System.out.println("getBookISBN, param received: " + idBook.toString()); // print
         List<ListedBooks> book = inventoryMapper.requestBooksFromID(idBook);
 
-        System.out.println("SQL return : ISBN : " + book.codeisbn.toString()); // print
         return book;
     }
 
@@ -119,7 +118,6 @@ public class InventoryService {
         System.out.println("getBookISBN, param received: " + sigle); // print
         List<ListedBooks> book = inventoryMapper.requestBooksFromSigle(sigle);
 
-        System.out.println("SQL return : ISBN : " + book.codeisbn.toString()); // print
         return book;
     }
 
@@ -229,7 +227,7 @@ public class InventoryService {
     @GET
     @Path("/requestBooksFromLanguage/{language}")
     @PermitAll
-    public List<ListedBooks> requestBooksFromLanguage(
+    public List<ListedBooks> listBooksFromLanguage(
             @PathParam("language") String languageURL
     ) {
         System.out.println("--------------------------");

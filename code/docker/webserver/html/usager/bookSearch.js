@@ -147,7 +147,7 @@ function requestAllBook() {
 /**
  *   New function format
  */
-function requestFromTitle() {
+function searchFromTitle() {
     const div = document.getElementById('title');
     const span = div.firstElementChild;
     var searchKeyword = document.getElementById('title_in');

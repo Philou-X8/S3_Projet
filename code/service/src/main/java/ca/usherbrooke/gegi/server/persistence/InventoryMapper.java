@@ -23,14 +23,12 @@ public interface InventoryMapper {
     List<ListedBooks> requestBooksFromSigle(String sigle);
     List<ListedBooks> requestBooksFromProgram(String program);
     List<ListedBooks> requestBooksFromAP(String topic);
-
     List<ListedBooks> requestBooksFromLanguage(String language);
-
     List<ListedBooks> requestBooksFromAuthor(String author);
 
     Book getBookFromTitle(String title);
 
-    Book getBookFromISBN(String isbn);
+    List<ListedBooks> getBookFromISBN(String isbn);
 
     void deleteBook(String bookID);
 }
