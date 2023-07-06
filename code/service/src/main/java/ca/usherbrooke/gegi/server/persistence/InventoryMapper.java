@@ -11,13 +11,13 @@ import java.util.List;
 @Mapper
 public interface InventoryMapper {
 
-    Book getBook(); // old function
-    List<Book> getBookAll(); // old function
-    Book getBookISBN(Long isbn); // old function
-    Book getBookFromID(Integer idBook); // old function
-    Book getBookFromSigle(String sigle); // old function
+    //Book getBook();
+    List<Book> getBookAll();
+    //Book getBookISBN(Long isbn);
+    //Book getBookFromID(Integer idBook);
+    //Book getBookFromSigle(String sigle);
 
-    List<ListedBooks> requestBooksFromID(String ID);
+    List<ListedBooks> requestBooksFromID(int id);
     List<ListedBooks> requestBooksFromTitle(String title);
     List<ListedBooks> requestBooksFromIsbn(Long isbn);
     List<ListedBooks> requestBooksFromSigle(String sigle);
