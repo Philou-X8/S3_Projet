@@ -271,6 +271,26 @@ FROM recherche_par_programme_view
 where program_label = 'Genie Informatique';
 
 
+CREATE OR REPLACE VIEW recherche_par_label_view AS
+SELECT book.label AS book_label,
+       book.codeISBN,
+       author.label AS author_label,
+       ap.sigle,
+       program.label AS program_label
+FROM ap
+         JOIN associated_to_SB ON ap.sigle = associated_to_SB.sigle
+         JOIN book ON associated_to_SB.book_id = book.book_id
+         JOIN field ON book.field_id = field.field_id
+         JOIN associated_to_AB ON book.book_id = associated_to_AB.book_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+         JOIN program ON field.field_id = program.field_id;
+
+SELECT *
+FROM recherche_par_label_view
+where book_label = 'Reseaux 5e edition';
+
+
+
 
 
 /*test unitaires 01
@@ -327,6 +347,5 @@ FROM book b
          JOIN editor e ON ateb.editor_id = e.editor_id;
 
 SELECT * FROM book_details WHERE book_id = 23 ;
-
 
 
