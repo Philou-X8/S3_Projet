@@ -49,6 +49,8 @@ CREATE TABLE extern_php.message (
 );
 
 
+
+
 ALTER TABLE extern_php.message OWNER TO postgres;
 
 --

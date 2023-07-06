@@ -6,6 +6,7 @@
     <script src="keycloakAuth.js"></script>
     <script src="testFunctions.js"></script>
     <script src="bookSearch.js"></script>
+    <script src="dbEditing.js"></script>
 
     <style>
         .myTable { background-color:#eee;border-collapse:collapse; }
@@ -14,10 +15,9 @@
     </style>
 
 </head>
-<body onload="initKeycloak()">
-<button onclick="requestStudent()">Étudiant?</button>
-<button onclick="requestTeacher()">Enseignant?</button>
-<button onclick="requestFuniButton()">Funi button</button>
+<body onload="start()" >
+
+
 <button onclick="requestAllBook()">Get all books</button>
 <div>
     <form>
@@ -33,7 +33,34 @@
         <button type="button" id="button_sigle" onclick="requestFromSigle()">Register</button>
     </form>
 </div>
-
+<div>
+    <form>
+        <label>Titre</label>
+        <input type="text" id="in_title_search" name="title_label">
+        <button type="button" id="button_title" onclick="requestFromTitle()">Register</button>
+    </form>
+</div>
+<div>
+    <form>
+        <label>ISBN:</label>
+        <input type="text" id="isbn_in" name="isbn_label">
+        <button type="button" id="button_isbn" onclick="requestFromISBN()">Register</button>
+    </form>
+</div>
+<div>
+    <form>
+        <label>Auteur</label>
+        <input type="text" id="author_in" name="author_label">
+        <button type="button" id="button_author" onclick="requestFromAuthor()">Register</button>
+    </form>
+</div>
+<div>
+    <form>
+        <label>Langage</label>
+        <input type="text" id="language_in" name="language_label">
+        <button type="button" id="button_language" onclick="requestFromLanguage()">Register</button>
+    </form>
+</div>
 <div id="title">
     <span></span>
 </div>
@@ -85,7 +112,18 @@
 
 </form>
 <div id="edit_pan">
-    <span>fsgdg</span>
+    <span>
+        <input type="text" id="in_class" placeholder="Cours" hidden>
+        <input type="text" id="in_title" placeholder="Titre de l'ouvrage"  hidden >
+        <input type="text" id="in_author" hidden placeholder="Auteur">
+        <input type="text" id="in_editor" hidden placeholder="Editeur">
+        <input type="text" id="in_isbn" hidden placeholder="ISBN">
+        <input type="text" id="in_url" hidden placeholder="URL">
+        <input type="text" id="in_language" hidden placeholder="Langue">
+        <input id="add_btn" name="ajouter" hidden="" type="button" value="Ajouter" onclick="addBook()" >
+
+
+    </span>
 </div>
 </body>
 </html>
