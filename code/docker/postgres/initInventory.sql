@@ -152,9 +152,9 @@ CREATE TABLE associated_to_EB
 
 CREATE VIEW recherche_par_autheur_view AS
 SELECT book.label    AS book_label,
-       book.codeISBN,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle,
+       ap.sigle      AS sigle_label,
        program.label AS program_label
 FROM ap
          JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
@@ -171,10 +171,10 @@ WHERE author_label = 'Gilbert SYBILLE';
 
 CREATE VIEW recherche_par_ISBN_view AS
 SELECT book.label    AS book_label,
-       book.codeISBN,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle,
-        program.label AS program_label
+       ap.sigle      AS sigle_label,
+       program.label AS program_label
 FROM ap
          JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
          JOIN book ON associated_to_SB.book_id = book.book_id
@@ -185,14 +185,14 @@ FROM ap
 
 SELECT *
 FROM recherche_par_ISBN_view
-WHERE codeISBN = '97813056321';
+WHERE isbn_label = '97813056321';
 
 
 CREATE view recherche_par_departement_view AS
 SELECT book.label    AS book_label,
-       book.codeISBN,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle,
+       ap.sigle      AS sigle_label,
        program.label AS program_label,
        field.label
 FROM ap
@@ -204,18 +204,19 @@ FROM ap
          JOIN program on field.field_id = program.field_id;
 
 /* Test unitaire */
-SELECT book_label, codeISBN, author_label, sigle/*, program_label, data*/
+SELECT book_label, isbn_label, author_label, sigle_label/*, program_label, data*/
 FROM recherche_par_departement_view
 WHERE label = 'Genie';
 
 
 CREATE VIEW recherche_par_ap_view AS
-SELECT ap.label      AS ap_label,
-       book.label    AS book_label,
-       book.codeISBN,
+SELECT book.label    AS book_label,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle,
-       program.label AS program_label
+       ap.sigle      AS sigle_label,
+       program.label AS program_label,
+       ap.label      AS ap_label
+
 FROM ap
 
          JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
@@ -227,16 +228,16 @@ FROM ap
 
 
 /* Test unitaire */
-SELECT book_label, codeISBN, author_label, sigle, program_label
+SELECT book_label, isbn_label, author_label, sigle_label, program_label
 FROM recherche_par_ap_view
 WHERE ap_label = 'Bases de donnees';
 
 CREATE view recherche_par_sigle_view AS
 
 SELECT book.label    AS book_label,
-       book.codeISBN,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle as sigle,
+       ap.sigle      AS sigle_label,
        program.label AS program_label
 
 FROM ap
@@ -247,16 +248,16 @@ FROM ap
          JOIN author ON associated_to_AB.author_id = author.author_id
          JOIN program on field.field_id = program.field_id;
 /* Test unitaire */
-SELECT book_label, codeISBN, author_label, sigle, program_label/*, data*/
+SELECT book_label, isbn_label, author_label, sigle_label, program_label/*, data*/
 FROM recherche_par_sigle_view
-WHERE sigle = 'GEL345';
+WHERE sigle_label = 'GEL345';
 
 
 CREATE VIEW recherche_par_programme_view AS
 SELECT book.label    AS book_label,
-       book.codeISBN,
+       book.codeISBN AS isbn_label,
        author.label  AS author_label,
-       ap.sigle,
+       ap.sigle      AS sigle_label,
        program.label AS program_label
 
 FROM ap
