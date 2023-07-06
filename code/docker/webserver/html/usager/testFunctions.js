@@ -107,6 +107,8 @@ function viewerMode() {
             document.getElementById('in_url').hidden=true;
             document.getElementById('in_language').hidden=true;
             document.getElementById('in_class').hidden=true;
+            document.getElementById('in_BookID').hidden=true;
+            document.getElementById('delete_btn').hidden=true;
 
         })
 
@@ -139,6 +141,8 @@ function editMode() {
             document.getElementById('in_url').hidden=false;
             document.getElementById('in_language').hidden=false;
             document.getElementById('in_class').hidden=false;
+            document.getElementById('in_BookID').hidden=false;
+            document.getElementById('delete_btn').hidden=false;
 
         })
         .catch(function (error){
@@ -147,3 +151,4 @@ function editMode() {
 
 
 }
+

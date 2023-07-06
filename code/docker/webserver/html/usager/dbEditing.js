@@ -25,3 +25,20 @@ function addBook() {
             alert("error dans add book");
         });
 }
+
+function deleteBook(){
+    const bookId = document.getElementById('in_BookID').value;
+
+    axios.get("http://localhost:8888/api/deleteBook/"+bookId,{
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+
+        .then(function (response){
+            alert(bookId)
+        })
+        .catch(function (error){
+            alert(error.toString())
+        })
+}

@@ -40,14 +40,14 @@ public class InventoryService {
 
 
     /********************************/
-    @GET
+    /*@GET
     @Path("/getBook")
     @PermitAll
     public Book getBook() {
         Book book= inventoryMapper.getBook();
 
         return book;
-    }
+    }*/
     /********************************/
     @GET
     @Path("/getBookAll")
@@ -69,7 +69,16 @@ public class InventoryService {
         return books;
 
     }
+
     @GET
+    @Path("/deleteBook/{bookID}")
+    @RolesAllowed("admin")
+    public void deleteBook(@PathParam("bookID") String bookID){
+        System.out.println("DeleteBook : "+bookID);
+        //inventoryMapper.deleteBook(bookID);
+
+
+    }    @GET
     @Path("/getBookFromTitle/{titleBook}")
     @PermitAll
     public Book getBookfromTitle(@PathParam("titleBook") String title){
@@ -83,12 +92,12 @@ public class InventoryService {
     @GET
     @Path("/getBookFromID/{idBook}")
     @PermitAll
-    public Book getBookFromID(
+    public List<ListedBooks> getBookFromID(
             @PathParam("idBook") Integer idBook
     ) {
         System.out.println("getBookISBN, param received: " + idBook.toString()); // print
-        Book book = inventoryMapper.getBookFromID(idBook);
-        if(book==null) book = new Book();
+        List<ListedBooks> book = inventoryMapper.requestBooksFromID(idBook);
+
         System.out.println("SQL return : ISBN : " + book.codeisbn.toString()); // print
         return book;
     }
@@ -97,12 +106,12 @@ public class InventoryService {
     @GET
     @Path("/getBookFromSigle/{sigleBook}")
     @PermitAll
-    public Book getBookFromSigle(
+    public List<ListedBooks> getBookFromSigle(
             @PathParam("sigleBook") String sigle
     ) {
         System.out.println("getBookISBN, param received: " + sigle); // print
-        Book book = inventoryMapper.getBookFromSigle(sigle);
-        if(book==null) book = new Book();
+        List<ListedBooks> book = inventoryMapper.requestBooksFromSigle(sigle);
+
         System.out.println("SQL return : ISBN : " + book.codeisbn.toString()); // print
         return book;
     }
@@ -110,10 +119,10 @@ public class InventoryService {
     @GET
     @Path("/getBookFromISBN/{isbn}")
     @PermitAll
-    public Book getBookFromISBN(@PathParam("isbn") String isbn){
+    public List<ListedBooks> getBookFromISBN(@PathParam("isbn") String isbn){
         System.out.println("getBookFromISBN : " + isbn);
-        Book book = inventoryMapper.getBookFromISBN(isbn);
-        if(book==null) book=new Book();
+        List<ListedBooks> book = inventoryMapper.getBookFromISBN(isbn);
+
         return book;
     }
 
