@@ -32,4 +32,5 @@ public interface InventoryMapper {
 
     Book getBookFromISBN(String isbn);
 
+    void deleteBook(String bookID);
 }

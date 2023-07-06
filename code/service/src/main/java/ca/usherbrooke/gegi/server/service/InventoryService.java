@@ -69,7 +69,16 @@ public class InventoryService {
         return books;
 
     }
+
     @GET
+    @Path("/deleteBook/{bookID}")
+    @RolesAllowed("admin")
+    public void deleteBook(@PathParam("bookID") String bookID){
+        System.out.println("DeleteBook : "+bookID);
+        //inventoryMapper.deleteBook(bookID);
+
+
+    }    @GET
     @Path("/getBookFromTitle/{titleBook}")
     @PermitAll
     public Book getBookfromTitle(@PathParam("titleBook") String title){

@@ -2,7 +2,7 @@
 function requestFromAuthor(){
     var auth = document.getElementById('author_in').value;
     alert(auth)
-    axios.get("http://localhost:8888/api/listBooksFromAuthor"+auth,{
+    axios.get("http://localhost:8888/api/listBooksFromAuthor/"+auth,{
         headers: {
             'Authorization': 'Bearer ' + keycloak.token
         }
