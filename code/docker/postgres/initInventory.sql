@@ -153,18 +153,13 @@ CREATE TABLE associated_to_EB
 
 
 CREATE VIEW recherche_par_autheur_view AS
-SELECT book.label    AS book_label,
-       book.codeISBN AS isbn_label,
-       author.label  AS author_label,
-       ap.sigle      AS sigle_label,
-       program.label AS program_label
-FROM ap
-         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
-         JOIN book ON associated_to_SB.book_id = book.book_id
-         JOIN field ON book.field_id = field.field_id
-         JOIN associated_to_ab on book.book_id = associated_to_AB.book_id
-         JOIN author ON associated_to_AB.author_id = author.author_id
-        JOIN program on field.field_id = program.field_id
+SELECT book_label,
+       isbn_label,
+       author_label,
+       sigle_label,
+       program_label
+FROM recherche_base
+
         /*JOIN program ON associated_Sigle_Program.program_id = program.program_id*/;
 SELECT *
 FROM recherche_par_autheur_view
@@ -285,12 +280,13 @@ FROM ap
          JOIN field ON book.field_id = field.field_id
          JOIN associated_to_AB ON book.book_id = associated_to_AB.book_id
          JOIN author ON associated_to_AB.author_id = author.author_id
-         JOIN program ON field.field_id = program.field_id;
+         JOIN program ON field.field_id = program.field_id
+;
 
 SELECT *
 FROM recherche_par_titre_view
 where book_label = 'Reseaux 5e edition';
--- TEST
+-- TEST ---------------------------------------------
 select book_label,
        isbn_label,
        author_label,
@@ -299,7 +295,7 @@ select book_label,
 from recherche_par_titre_view -- change for title
 where unaccent(LOWER(book_label)) like ('%' || unaccent(LOWER( 'de' )) || '%')
 order by book_label desc;
-
+-- TEST END ------------------------------------------
 
 CREATE OR REPLACE VIEW recherche_par_langue_view AS
 SELECT book.label    AS book_label,
@@ -322,8 +318,30 @@ FROM recherche_par_langue_view
 WHERE language_label = 'Anglais';
 
 
+--------------------------------------------------------------
 
-
+CREATE OR REPLACE VIEW recherche_base AS
+SELECT book.label                                           AS book_label,
+       book.codeISBN                                        AS isbn_label,
+       string_agg(DISTINCT(author.label), ', ')::varchar    AS author_label,
+       string_agg(DISTINCT(ap.sigle), ', ')::varchar        AS sigle_label,
+       string_agg(DISTINCT(program.label), ', ')::varchar   AS program_label,
+       language.label                                       AS language_label,
+       string_agg(DISTINCT(ap.label), ', ')::varchar        AS ap_label,
+       field.label                                          AS field_label
+FROM ap
+         JOIN associated_to_SB  ON ap.sigle = associated_to_SB.sigle
+         JOIN book              ON associated_to_SB.book_id = book.book_id
+         JOIN field             ON book.field_id = field.field_id
+         JOIN associated_to_AB  ON book.book_id = associated_to_AB.book_id
+         JOIN author            ON associated_to_AB.author_id = author.author_id
+         JOIN program           ON field.field_id = program.field_id
+         JOIN language          ON book.language_id = language.language_id
+GROUP BY book_label,
+       isbn_label,
+       language_label,
+       field_label
+;
 
 
 /*test unitaires 01

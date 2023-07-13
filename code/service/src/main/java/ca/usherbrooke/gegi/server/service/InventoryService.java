@@ -178,7 +178,7 @@ public class InventoryService {
         List<ListedBooks> books = inventoryMapper.requestBooksFromTitle(title);
         System.out.println(books);
         if(books == null) books = new ArrayList<ListedBooks>();
-        books = collapseLines(books);
+        //books = collapseLines(books);
         System.out.println(books);
         return books;
     }
@@ -197,7 +197,7 @@ public class InventoryService {
             List<ListedBooks> books = inventoryMapper.requestBooksFromIsbn(isbn);
 
             if(books == null) books = new ArrayList<ListedBooks>();
-            books = collapseLines(books);
+            //books = collapseLines(books);
             System.out.println(books);
             return books;
         } catch (NumberFormatException e) {
@@ -219,7 +219,7 @@ public class InventoryService {
         System.out.println("listBooksFromSigle, formated param received: " + sigle); // print
         List<ListedBooks> books = inventoryMapper.requestBooksFromSigle(sigle);
         if(books == null) books = new ArrayList<ListedBooks>();
-        books = collapseLines(books);
+        //books = collapseLines(books);
         System.out.println(books);
         return books;
     }
@@ -236,7 +236,7 @@ public class InventoryService {
         System.out.println("listBooksFromProgram, formated param received: " + program); // print
         List<ListedBooks> books = inventoryMapper.requestBooksFromProgram(program);
         if(books == null) books = new ArrayList<ListedBooks>();
-        books = collapseLines(books);
+        //books = collapseLines(books);
         System.out.println(books);
         return books;
     }
@@ -253,13 +253,13 @@ public class InventoryService {
         System.out.println("listBooksFromAP, formated param received: " + ap); // print
         List<ListedBooks> books = inventoryMapper.requestBooksFromAP(ap);
         if(books == null) books = new ArrayList<ListedBooks>();
-        books = collapseLines(books);
+        //books = collapseLines(books);
         System.out.println(books);
         return books;
     }
 
     @GET
-    @Path("/requestBooksFromLanguage/{language}")
+    @Path("/listBooksFromLanguage/{language}")
     @PermitAll
     public List<ListedBooks> listBooksFromLanguage(
             @PathParam("language") String languageURL
@@ -270,13 +270,13 @@ public class InventoryService {
         System.out.println("requestBooksFromLanguage, formated param received: " + language); // print
         List<ListedBooks> books = inventoryMapper.requestBooksFromLanguage(language);
         if(books == null) books = new ArrayList<ListedBooks>();
-        books = collapseLines(books);
+        //books = collapseLines(books);
         System.out.println(books);
         return books;
     }
 
     @GET
-    @Path("/requestBooksFromAuthor/{author}")
+    @Path("/listBooksFromAuthor/{author}")
     @PermitAll
     public List<ListedBooks> listBooksFromAuthor(
             @PathParam("author") String authorURL
@@ -287,7 +287,7 @@ public class InventoryService {
         System.out.println("requestBooksFromAuthor, formated param received: " + author); // print
         List<ListedBooks> books = inventoryMapper.requestBooksFromAuthor(author);
         if(books == null) books = new ArrayList<ListedBooks>();
-        books = collapseLines(books);
+        //books = collapseLines(books);
         System.out.println(books);
         return books;
     }
