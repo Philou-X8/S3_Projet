@@ -20,43 +20,43 @@
 
 <button onclick="requestAllBook()">Get all books</button>
 <div>
-    <form>
+    <form onsubmit="requestFromID();return false">
         <label>Book ID:</label>
         <input type="text" id="book_id_in" name="book_id_label"/>
         <button type="button" id="button_book_id" onclick="requestFromID()">Register</button>
     </form>
 </div>
 <div>
-    <form>
+    <form onsubmit="searchFromSigle();return false">
         <label>Code du cours:</label>
         <input type="text" id="sigle_in" name="sigle_label"/>
         <button type="button" id="button_sigle" onclick="searchFromSigle()">Register</button>
     </form>
 </div>
 <div>
-    <form>
+    <form onsubmit="searchFromTitle();return false">
         <label>Titre</label>
-        <input type="text" id="title_in" name="title_label">
+        <input type="text" id="title_in" name="title_label" onsubmit="searchFromTitle()">
         <button type="button" id="button_title" onclick="searchFromTitle()">Register</button>
-        <input type="submit"/>
+
     </form>
 </div>
 <div>
-    <form>
+    <form onsubmit="searchFromIsbn();return false">
         <label>ISBN:</label>
         <input type="text" id="isbn_in" name="isbn_label">
         <button type="button" id="button_isbn" onclick="searchFromIsbn()">Register</button>
     </form>
 </div>
 <div>
-    <form>
+    <form onsubmit="searchFromAuthor();return false">
         <label>Auteur</label>
         <input type="text" id="author_in" name="author_label">
         <button type="button" id="button_author" onclick="searchFromAuthor()">Register</button>
     </form>
 </div>
 <div>
-    <form>
+    <form onsubmit="searchFromLanguage();return false">
         <label>Langage</label>
         <input type="text" id="language_in" name="language_label">
         <button type="button" id="button_language" onclick="searchFromLanguage()">Register</button>

@@ -167,18 +167,12 @@ WHERE author_label = 'Gilbert SYBILLE';
 
 
 CREATE VIEW recherche_par_ISBN_view AS
-SELECT book.label    AS book_label,
-       book.codeISBN AS isbn_label,
-       author.label  AS author_label,
-       ap.sigle      AS sigle_label,
-       program.label AS program_label
-FROM ap
-         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
-         JOIN book ON associated_to_SB.book_id = book.book_id
-         JOIN field ON book.field_id = field.field_id
-         Join associated_to_AB on book.book_id = associated_to_AB.book_id
-         JOIN author ON associated_to_AB.author_id = author.author_id
-         JOIN program on field.field_id = program.field_id;
+SELECT book_label,
+       isbn_label,
+       author_label,
+       sigle_label,
+       program_label
+FROM recherche_base;
 
 SELECT *
 FROM recherche_par_ISBN_view
@@ -186,42 +180,28 @@ WHERE isbn_label = '97813056321';
 
 
 CREATE view recherche_par_departement_view AS
-SELECT book.label    AS book_label,
-       book.codeISBN AS isbn_label,
-       author.label  AS author_label,
-       ap.sigle      AS sigle_label,
-       program.label AS program_label,
-       field.label
-FROM ap
-         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
-         JOIN book ON associated_to_SB.book_id = book.book_id
-         JOIN field ON book.field_id = field.field_id
-         Join associated_to_AB on book.book_id = associated_to_AB.book_id
-         JOIN author ON associated_to_AB.author_id = author.author_id
-         JOIN program on field.field_id = program.field_id;
+SELECT book_label,
+       isbn_label,
+       author_label,
+       sigle_label,
+       program_label,
+       field_label
+FROM recherche_base;
 
 /* Test unitaire */
 SELECT book_label, isbn_label, author_label, sigle_label/*, program_label, data*/
 FROM recherche_par_departement_view
-WHERE label = 'Genie';
+WHERE field_label = 'Genie';
 
 
 CREATE VIEW recherche_par_ap_view AS
-SELECT book.label    AS book_label,
-       book.codeISBN AS isbn_label,
-       author.label  AS author_label,
-       ap.sigle      AS sigle_label,
-       program.label AS program_label,
-       ap.label      AS ap_label
-
-FROM ap
-
-         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
-         JOIN book ON associated_to_SB.book_id = book.book_id
-         JOIN field ON book.field_id = field.field_id
-         Join associated_to_AB on book.book_id = associated_to_AB.book_id
-         JOIN author ON associated_to_AB.author_id = author.author_id
-         JOIN program on field.field_id = program.field_id;
+SELECT book_label,
+       isbn_label,
+       author_label,
+       sigle_label,
+       program_label,
+       ap_label
+FROM recherche_base;
 
 
 /* Test unitaire */
@@ -231,18 +211,12 @@ WHERE ap_label = 'Bases de donnees';
 
 
 CREATE view recherche_par_sigle_view AS
-SELECT book.label    AS book_label,
-       book.codeISBN AS isbn_label,
-       author.label  AS author_label,
-       ap.sigle      AS sigle_label,
-       program.label AS program_label
-FROM ap
-         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
-         JOIN book ON associated_to_SB.book_id = book.book_id
-         JOIN field ON book.field_id = field.field_id
-         Join associated_to_AB on book.book_id = associated_to_AB.book_id
-         JOIN author ON associated_to_AB.author_id = author.author_id
-         JOIN program on field.field_id = program.field_id;
+SELECT book_label,
+       isbn_label,
+       author_label,
+       sigle_label,
+       program_label
+FROM recherche_base;
 /* Test unitaire */
 SELECT book_label, isbn_label, author_label, sigle_label, program_label/*, data*/
 FROM recherche_par_sigle_view
@@ -250,37 +224,25 @@ WHERE sigle_label = 'GEL345';
 
 
 CREATE VIEW recherche_par_programme_view AS
-SELECT book.label    AS book_label,
-       book.codeISBN AS isbn_label,
-       author.label  AS author_label,
-       ap.sigle      AS sigle_label,
-       program.label AS program_label
+SELECT book_label,
+       isbn_label,
+       author_label,
+       sigle_label,
+       program_label
+FROM recherche_base;
 
-FROM ap
-         JOIN associated_to_SB on ap.sigle = associated_to_SB.sigle
-         JOIN book ON associated_to_SB.book_id = book.book_id
-         JOIN field ON book.field_id = field.field_id
-         Join associated_to_AB on book.book_id = associated_to_AB.book_id
-         JOIN author ON associated_to_AB.author_id = author.author_id
-         JOIN program on field.field_id = program.field_id;
 SELECT *
 FROM recherche_par_programme_view
 where program_label = 'Genie Informatique';
 
 
 CREATE OR REPLACE VIEW recherche_par_titre_view AS
-SELECT book.label    AS book_label,
-       book.codeISBN AS isbn_label,
-       author.label  AS author_label,
-       ap.sigle      AS sigle_label,
-       program.label AS program_label
-FROM ap
-         JOIN associated_to_SB ON ap.sigle = associated_to_SB.sigle
-         JOIN book ON associated_to_SB.book_id = book.book_id
-         JOIN field ON book.field_id = field.field_id
-         JOIN associated_to_AB ON book.book_id = associated_to_AB.book_id
-         JOIN author ON associated_to_AB.author_id = author.author_id
-         JOIN program ON field.field_id = program.field_id
+SELECT book_label,
+       isbn_label,
+       author_label,
+       sigle_label,
+       program_label
+FROM recherche_base
 ;
 
 SELECT *
@@ -298,20 +260,13 @@ order by book_label desc;
 -- TEST END ------------------------------------------
 
 CREATE OR REPLACE VIEW recherche_par_langue_view AS
-SELECT book.label    AS book_label,
-       book.codeISBN AS isbn_label,
-       author.label  AS author_label,
-       ap.sigle      AS sigle_label,
-       program.label AS program_label,
-       language.label AS language_label
-FROM ap
-         JOIN associated_to_SB ON ap.sigle = associated_to_SB.sigle
-         JOIN book ON associated_to_SB.book_id = book.book_id
-         JOIN field ON book.field_id = field.field_id
-         JOIN associated_to_AB ON book.book_id = associated_to_AB.book_id
-         JOIN author ON associated_to_AB.author_id = author.author_id
-         JOIN program ON field.field_id = program.field_id
-         JOIN language ON book.language_id = language.language_id;
+SELECT book_label,
+       isbn_label,
+       author_label,
+       sigle_label,
+       program_label,
+       language_label
+FROM recherche_base;
 
 SELECT *
 FROM recherche_par_langue_view

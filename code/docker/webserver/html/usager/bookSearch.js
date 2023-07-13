@@ -209,7 +209,7 @@ function searchFromTitle() {
     var searchKeyword = document.getElementById('title_in');
 
     makeSearch('listBooksFromTitle', searchKeyword.value);
-
+    return false;
 }
 
 function searchFromIsbn() {
