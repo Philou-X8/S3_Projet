@@ -92,13 +92,14 @@ function viewerMode() {
     const div = document.getElementById('edit_pan');
     const span  = div.firstElementChild;
 
-
-    axios.get("http://localhost:8888/api/viewer", {
+    axios.get("http://localhost:8888/api/viewer" , {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token
         }
     })
+
         .then(function (response){
+          
             document.getElementById('in_author').hidden=true;
             document.getElementById('in_title').hidden=true;
             document.getElementById('add_btn').hidden=true;
@@ -113,9 +114,8 @@ function viewerMode() {
         })
 
         .catch(function (error){
-            keycloak.updateToken(5).then(function (){
-                console.log("Token Refresh");
-            })
+            alert("Il y a un bug");
+
         })
 
 
