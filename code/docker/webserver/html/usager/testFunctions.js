@@ -89,17 +89,9 @@ function requestFuniButton() {
 
 
 function viewerMode() {
-    const div = document.getElementById('edit_pan');
-    const span  = div.firstElementChild;
 
-    axios.get("http://localhost:8888/api/viewer" , {
-        headers: {
-            'Authorization': 'Bearer ' + keycloak.token
-        }
-    })
 
-        .then(function (response){
-          
+
             document.getElementById('in_author').hidden=true;
             document.getElementById('in_title').hidden=true;
             document.getElementById('add_btn').hidden=true;
@@ -109,18 +101,7 @@ function viewerMode() {
             document.getElementById('in_language').hidden=true;
             document.getElementById('in_class').hidden=true;
             document.getElementById('in_BookID').hidden=true;
-            document.getElementById('delete_btn').hidden=true;
-
-        })
-
-        .catch(function (error){
-            alert("Il y a un bug");
-
-        })
-
-
-
-
+            document.getElementById('delete_btn').hidden=true
 
 }
 
@@ -148,7 +129,9 @@ function editMode() {
         .catch(function (error){
             alert("error en loadant edit mode");
         });
-
-
 }
 
+function selectBook(new_name){
+    var label = document.getElementById('Book_name_encadre').innerHTML = new_name;
+
+}

@@ -106,10 +106,7 @@ public class RoleService {
         return p;
     }
 
-    @GET
-    @Path("/viewer")
-    @PermitAll
-    public void viewer(){}
+
 
     @GET
     @Path("/editer")
