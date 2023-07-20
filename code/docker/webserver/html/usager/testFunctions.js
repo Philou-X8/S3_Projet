@@ -131,7 +131,29 @@ function editMode() {
         });
 }
 
-function selectBook(new_name){
-    var label = document.getElementById('Book_name_encadre').innerHTML = new_name;
+function selectBook(){
+    document.getElementById('affichageImage').hidden=false;
+    var table = document.getElementById('book_table');
+    let row  = -1;
+    for (let i=1;i<table.rows.length;i++){
+        let radio = table.rows[i].cells[0].querySelector('input[type="radio"]');
+        if(radio && radio.checked){
+            row =i;
+            break;
+
+        }
+    }
+
+
+    if(row==-1){
+        return
+    }
+    var title =table.rows[row].cells[1].innerHTML
+    var isbn = table.rows[row].cells[3].innerHTML
+    document.getElementById('Book_name_encadre').innerHTML = title;
+   var img = document.getElementById('img')
+    img.src = "../images/"+isbn+".jpg"
+    img.style.height = 7*75+'px'
+    img.style.width = 5*75+'px'
 
 }

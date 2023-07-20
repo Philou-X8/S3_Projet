@@ -81,14 +81,24 @@
         </thead>
         <tbody id="book_body">
             <tr id="book_table_rows">
-                <td><input type="radio" ALIGN="CENTER" name="affichage" onclick="selectBook('Selected book name')"></td>
+                <td><input  type="radio" ALIGN="CENTER" name="affichage" onclick="selectBook()"></td>
+                <td>python</td>
                 <td></td>
-                <td></td>
-                <td></td>
+                <td>9781627056205</td>
                 <td></td>
                 <td></td>
                 <td></td>
             </tr>
+            <tr id="book">
+                <td><input  type="radio" ALIGN="CENTER" name="affichage" onclick="selectBook()"></td>
+                <td>blabla</td>
+                <td></td>
+                <td>9791092564358</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
         </tbody>
     </table>
 
@@ -138,8 +148,8 @@
 <style >
 
 
-       .machinChouette {
-           width: 500px;
+       .encadre {
+           width: 375px;
            vertical-align: text-top;
        }
 
@@ -147,12 +157,12 @@
 </style>
 <div>
 
-        <form style="border: 2px solid black" class="machinChouette">
+        <form id="affichageImage" style="border: 2px solid black" class="encadre" hidden>
 
-        <label id="Book_name_encadre" class="machinChouette"  >insert book title  </label>
+        <label id="Book_name_encadre" class="machinChouette"  >  </label>
             <div>
 
-                <img id="img" src="../../../../images/9780124077263.jpg">
+                <img id="img" >
             </div>
 
         </form>
