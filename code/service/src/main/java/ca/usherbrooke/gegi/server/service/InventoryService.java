@@ -191,8 +191,9 @@ public class InventoryService {
     ) {
         System.out.println("--------------------------");
         System.out.println("listBooksFromISBN, raw param received: " + isbnURL); // print
+        String isbnStr = URLDecoder.decode(isbnURL, StandardCharsets.UTF_8);
         try{
-            Long isbn = Integer.toUnsignedLong(Integer.parseInt(isbnURL));
+            long isbn = Long.parseLong(isbnStr);
             System.out.println("listBooksFromISBN, formated param received: " + isbn); // print
             List<ListedBooks> books = inventoryMapper.requestBooksFromIsbn(isbn);
 
@@ -201,6 +202,7 @@ public class InventoryService {
             System.out.println(books);
             return books;
         } catch (NumberFormatException e) {
+            e.printStackTrace();
             return new ArrayList<ListedBooks>();
         }
 

@@ -192,7 +192,7 @@ function addBookToList(book){
     tableBody = document.getElementById("book_body");
     var row = tableBody.insertRow(-1);
 
-    row.insertCell(0).innerHTML = '<input type="radio" ALIGN="CENTER" name="affichage" onClick="selectBook()">';
+    row.insertCell(0).innerHTML = '<input type="radio" name="affichage" onClick="selectBook(); return false;"></input>';
     row.insertCell(1).innerHTML = book.book_label;
     row.insertCell(2).innerHTML = book.author_label;
     row.insertCell(3).innerHTML = book.isbn_label;
