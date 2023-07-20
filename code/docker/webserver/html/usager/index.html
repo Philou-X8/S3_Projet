@@ -17,15 +17,6 @@
 </head>
 <body onload="start()" >
 
-
-<button onclick="requestAllBook()">Get all books</button>
-<div>
-    <form onsubmit="requestFromID();return false">
-        <label>Book ID:</label>
-        <input type="text" id="book_id_in" name="book_id_label"/>
-        <button type="button" id="button_book_id" onclick="requestFromID()">Register</button>
-    </form>
-</div>
 <div>
     <form onsubmit="searchFromSigle();return false">
         <label>Code du cours:</label>
@@ -36,7 +27,7 @@
 <div>
     <form onsubmit="searchFromTitle();return false">
         <label>Titre</label>
-        <input type="text" id="title_in" name="title_label" onsubmit="searchFromTitle()">
+        <input type="text" id="title_in" name="title_label">
         <button type="button" id="button_title" onclick="searchFromTitle()">Register</button>
 
     </form>
