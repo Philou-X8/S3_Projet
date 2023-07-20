@@ -25,10 +25,11 @@ public interface InventoryMapper {
     List<ListedBooks> requestBooksFromAP(String topic);
     List<ListedBooks> requestBooksFromLanguage(String language);
     List<ListedBooks> requestBooksFromAuthor(String author);
+    Book requestBookAllInfo(long isbn);
 
-    Book getBookFromTitle(String title);
 
-    List<ListedBooks> getBookFromISBN(String isbn);
+
+    //List<ListedBooks> getBookFromISBN(String isbn);
 
     void deleteBook(String bookID);
 }
