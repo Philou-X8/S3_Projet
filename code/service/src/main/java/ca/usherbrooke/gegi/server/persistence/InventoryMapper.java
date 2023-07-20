@@ -19,7 +19,7 @@ public interface InventoryMapper {
 
     List<ListedBooks> requestBooksFromID(int id);
     List<ListedBooks> requestBooksFromTitle(String title);
-    List<ListedBooks> requestBooksFromIsbn(Long isbn);
+    List<ListedBooks> requestBooksFromIsbn(long isbn);
     List<ListedBooks> requestBooksFromSigle(String sigle);
     List<ListedBooks> requestBooksFromProgram(String program);
     List<ListedBooks> requestBooksFromAP(String topic);

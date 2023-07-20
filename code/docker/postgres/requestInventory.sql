@@ -86,4 +86,3 @@ FROM book b
          JOIN typeformat tf ON f.typeformat_id = tf.typeformat_id
 WHERE tf.label = 'Papier';
 
-z

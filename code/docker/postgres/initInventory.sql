@@ -186,8 +186,34 @@ CREATE TABLE associated_to_EB
 --                   VIEWS                    --
 ------------------------------------------------
 
+/**
+ * Vue de base pour les recherches.
+ */
+CREATE OR REPLACE VIEW recherche_base AS
+SELECT book.label                                           AS book_label,
+       book.codeISBN                                        AS isbn_label,
+       string_agg(DISTINCT(author.label), ', ')::varchar    AS author_label,
+       string_agg(DISTINCT(ap.sigle), ', ')::varchar        AS sigle_label,
+       string_agg(DISTINCT(program.label), ', ')::varchar   AS program_label,
+       language.label                                       AS language_label,
+       string_agg(DISTINCT(ap.label), ', ')::varchar        AS ap_label,
+       field.label                                          AS field_label
+FROM ap
+         JOIN associated_to_SB  ON ap.sigle = associated_to_SB.sigle
+         JOIN book              ON associated_to_SB.book_id = book.book_id
+         JOIN field             ON book.field_id = field.field_id
+         JOIN associated_to_AB  ON book.book_id = associated_to_AB.book_id
+         JOIN author            ON associated_to_AB.author_id = author.author_id
+         JOIN program           ON field.field_id = program.field_id
+         JOIN language          ON book.language_id = language.language_id
+GROUP BY book_label,
+         isbn_label,
+         language_label,
+         field_label
+;
 
-CREATE VIEW recherche_par_autheur_view AS
+
+CREATE OR REPLACE VIEW recherche_par_autheur_view AS
 SELECT book_label,
        isbn_label,
        author_label,
@@ -204,7 +230,7 @@ WHERE author_label = 'Gilbert SYBILLE';
 /**
  * Vue pour les recherches par ISBN.
  */
-CREATE VIEW recherche_par_ISBN_view AS
+CREATE OR REPLACE VIEW recherche_par_ISBN_view AS
 SELECT book_label,
        isbn_label,
        author_label,
@@ -219,7 +245,7 @@ WHERE isbn_label = '97813056321';
  * Vue pour les recherches par département.
  */
 
-CREATE view recherche_par_departement_view AS
+CREATE OR REPLACE view recherche_par_departement_view AS
 SELECT book_label,
        isbn_label,
        author_label,
@@ -237,7 +263,7 @@ WHERE field_label = 'Genie';
  * Vue pour les recherches par sigle.
  */
 
-CREATE VIEW recherche_par_ap_view AS
+CREATE OR REPLACE VIEW recherche_par_ap_view AS
 SELECT book_label,
        isbn_label,
        author_label,
@@ -255,7 +281,7 @@ WHERE ap_label = 'Bases de donnees';
 /**
  * Vue pour les recherches par titre.
  */
-CREATE view recherche_par_sigle_view AS
+CREATE OR REPLACE view recherche_par_sigle_view AS
 SELECT book_label,
        isbn_label,
        author_label,
@@ -271,7 +297,7 @@ WHERE sigle_label = 'GEL345';
  * Vue pour les recherches par programme.
  */
 
-CREATE VIEW recherche_par_programme_view AS
+CREATE OR REPLACE VIEW recherche_par_programme_view AS
 SELECT book_label,
        isbn_label,
        author_label,
@@ -326,31 +352,6 @@ WHERE language_label = 'Anglais';
 
 
 --------------------------------------------------------------
-/**
- * Vue de base pour les recherches.
- */
-CREATE OR REPLACE VIEW recherche_base AS
-SELECT book.label                                           AS book_label,
-       book.codeISBN                                        AS isbn_label,
-       string_agg(DISTINCT(author.label), ', ')::varchar    AS author_label,
-       string_agg(DISTINCT(ap.sigle), ', ')::varchar        AS sigle_label,
-       string_agg(DISTINCT(program.label), ', ')::varchar   AS program_label,
-       language.label                                       AS language_label,
-       string_agg(DISTINCT(ap.label), ', ')::varchar        AS ap_label,
-       field.label                                          AS field_label
-FROM ap
-         JOIN associated_to_SB  ON ap.sigle = associated_to_SB.sigle
-         JOIN book              ON associated_to_SB.book_id = book.book_id
-         JOIN field             ON book.field_id = field.field_id
-         JOIN associated_to_AB  ON book.book_id = associated_to_AB.book_id
-         JOIN author            ON associated_to_AB.author_id = author.author_id
-         JOIN program           ON field.field_id = program.field_id
-         JOIN language          ON book.language_id = language.language_id
-GROUP BY book_label,
-       isbn_label,
-       language_label,
-       field_label
-;
 
 
 /*test unitaires 01
@@ -416,3 +417,25 @@ FROM book b
 SELECT * FROM book_details WHERE book_id = 23 ;
 
 
+CREATE VIEW all_info_for_a_book AS
+SELECT  book.label AS book_label , book.codeISBN,book.publicationDate, book.URL,
+        author.label AS author_label, editor.label AS editor_label, field.label AS field_label,
+        format.label AS format_label, image.data,language.label AS language_label,
+        program.label AS program_label ,typeformat.label AS typeformat_label,
+        associated_to_SB.sigle ,ap.label AS ap_label
+FROM book
+         JOIN field ON book.field_id = field.field_id
+         JOIN image ON book.image_id = image.image_id
+         JOIN language ON book.language_id = "language".language_id
+         JOIN format ON book.format_id = format.format_id
+         JOIN associated_to_AB ON book.book_id = associated_to_AB.book_id
+         JOIN associated_to_EB ON book.book_id = associated_to_EB.book_id
+         JOIN editor ON associated_to_EB.editor_id = editor.editor_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+         JOIN program ON field.field_id = program.field_id AND book.field_id = program.field_id
+         JOIN associated_to_SB ON book.book_id = associated_to_SB.book_id
+         JOIN associated_to_SP ON program.program_id = associated_to_SP.program_id
+         JOIN typeformat ON format.typeformat_id = typeformat.typeformat_id
+         JOIN ap ON associated_to_SB.sigle = ap.sigle AND associated_to_SP.sigle = ap.sigle ;
+
+SELECT * FROM all_info_for_a_book WHERE book_label = 'Reseaux 5e edition' ;

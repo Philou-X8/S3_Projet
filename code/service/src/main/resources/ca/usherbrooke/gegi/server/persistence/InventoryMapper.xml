@@ -4,22 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ca.usherbrooke.gegi.server.persistence.InventoryMapper">
 
-    <select id="getBookAll" resultType="ca.usherbrooke.gegi.server.business.Book">
-        select sigle,
-               book_id,
-               label,
-               codeisbn,
-               author_id,
-               editor_id,
-               publicationdate,
-               format_id,
-               url,
-               language_id,
-               image_id
-        from public.book
-        where book_id = 1;
-    </select>
-
 
     <select id="requestBooksFromTitle" resultType="ca.usherbrooke.gegi.server.business.ListedBooks">
         select book_label,
@@ -41,7 +25,6 @@
                program_label
         from recherche_par_ISBN_view
         where isbn_label = #{isbn}
-        --where unaccent(LOWER(isbn_label)) like ('%' || unaccent(LOWER( #{isbn} )) || '%')
         order by isbn_label desc;
     </select>
 
