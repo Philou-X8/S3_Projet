@@ -1,5 +1,7 @@
 CREATE EXTENSION unaccent;
-
+/**
+ * Table pour stocker les champs.
+ */
 CREATE TABLE field
 (
     field_id INT NOT NULL,
@@ -7,7 +9,9 @@ CREATE TABLE field
     PRIMARY KEY (field_id)
 );
 
-
+/**
+ * Table pour stocker les programmes.
+ */
 CREATE TABLE program
 (
     program_id INT NOT NULL,
@@ -16,6 +20,9 @@ CREATE TABLE program
     field_id INT NOT NULL,
     FOREIGN KEY (field_id) REFERENCES field(field_id)
 );
+/**
+ * Table pour stocker les sigles.
+ */
 
 CREATE TABLE ap
 (
@@ -23,21 +30,27 @@ CREATE TABLE ap
     label varchar NOT NULL,
     PRIMARY KEY (sigle)
 );
-
+/**
+ * Table pour stocker les images.
+ */
 CREATE TABLE image
 (
     image_id INT NOT NULL,
     data bytea,
     PRIMARY KEY (image_id)
 );
-
+/**
+ * Table pour stocker les langues.
+ */
 CREATE TABLE language
 (
     language_id INT NOT NULL,
     label varchar NOT NULL,
     PRIMARY KEY (language_id)
 );
-
+/**
+ * Table pour stocker les éditeurs.
+ */
 CREATE TABLE editor
 (
     editor_id INT NOT NULL,
@@ -46,6 +59,9 @@ CREATE TABLE editor
     PRIMARY KEY (editor_id)
 );
 
+/**
+ * Table pour stocker les auteurs.
+ */
 CREATE TABLE author
 (
     author_id INT NOT NULL,
@@ -55,6 +71,9 @@ CREATE TABLE author
 );
 
 
+/**
+ * Table pour stocker les types de format.
+ */
 
 CREATE TABLE typeformat
 (
@@ -62,7 +81,14 @@ CREATE TABLE typeformat
     label         varchar NOT NULL,
     PRIMARY KEY (typeformat_id)
 );
-
+/**
+ * Table pour stocker les formats.
+--1 = papier
+--2 = pdf
+--3 = Epub
+--4 = site Internet
+--5 = person"
+ */
 
 CREATE TABLE format
 (
@@ -74,11 +100,9 @@ CREATE TABLE format
     PRIMARY KEY (format_id),
     FOREIGN KEY (typeformat_id) REFERENCES typeformat(typeformat_id)
 );
---1 = papier
---2 = pdf
---3 = Epub
---4 = site Internet
---5 = person"
+/**
+ * Table pour stocker les livres.
+ */
 
 CREATE TABLE book
 (
@@ -108,6 +132,10 @@ CREATE TABLE book
     UNIQUE (codeISBN)
 );
 
+/**
+ * Table pour stocker les associations entre les livres et les sigles.
+ */
+
 CREATE TABLE associated_to_SB
 
 (
@@ -117,6 +145,9 @@ CREATE TABLE associated_to_SB
     FOREIGN KEY (book_id) REFERENCES book(book_id),
     FOREIGN KEY (sigle) REFERENCES ap(sigle)
 );
+/**
+ * Table pour stocker les associations entre les sigles et les programmes.
+ */
 CREATE TABLE associated_to_SP
 (
     sigle varchar NOT NULL,
@@ -125,7 +156,9 @@ CREATE TABLE associated_to_SP
     FOREIGN KEY (program_id) REFERENCES program(program_id),
     FOREIGN KEY (sigle) REFERENCES ap(sigle)
 );
-
+/**
+ * Table pour stocker les associations entre les auteurs et les livres.
+ */
 
 CREATE TABLE associated_to_AB
 (
@@ -135,7 +168,9 @@ CREATE TABLE associated_to_AB
     FOREIGN KEY (author_id) REFERENCES author (author_id),
     FOREIGN KEY (book_id) REFERENCES book (book_id)
 );
-
+/**
+ * Table pour stocker les associations entre les éditeurs et les livres.
+ */
 
 CREATE TABLE associated_to_EB
 (
@@ -161,11 +196,14 @@ SELECT book_label,
 FROM recherche_base
 
         /*JOIN program ON associated_Sigle_Program.program_id = program.program_id*/;
+/* Test unitaire */
 SELECT *
 FROM recherche_par_autheur_view
 WHERE author_label = 'Gilbert SYBILLE';
 
-
+/**
+ * Vue pour les recherches par ISBN.
+ */
 CREATE VIEW recherche_par_ISBN_view AS
 SELECT book_label,
        isbn_label,
@@ -173,11 +211,13 @@ SELECT book_label,
        sigle_label,
        program_label
 FROM recherche_base;
-
+/* Test unitaire */
 SELECT *
 FROM recherche_par_ISBN_view
 WHERE isbn_label = '97813056321';
-
+/**
+ * Vue pour les recherches par département.
+ */
 
 CREATE view recherche_par_departement_view AS
 SELECT book_label,
@@ -187,12 +227,15 @@ SELECT book_label,
        program_label,
        field_label
 FROM recherche_base;
-
 /* Test unitaire */
 SELECT book_label, isbn_label, author_label, sigle_label/*, program_label, data*/
 FROM recherche_par_departement_view
 WHERE field_label = 'Genie';
 
+
+/**
+ * Vue pour les recherches par sigle.
+ */
 
 CREATE VIEW recherche_par_ap_view AS
 SELECT book_label,
@@ -209,7 +252,9 @@ SELECT book_label, isbn_label, author_label, sigle_label, program_label
 FROM recherche_par_ap_view
 WHERE ap_label = 'Bases de donnees';
 
-
+/**
+ * Vue pour les recherches par titre.
+ */
 CREATE view recherche_par_sigle_view AS
 SELECT book_label,
        isbn_label,
@@ -222,6 +267,9 @@ SELECT book_label, isbn_label, author_label, sigle_label, program_label/*, data*
 FROM recherche_par_sigle_view
 WHERE sigle_label = 'GEL345';
 
+/**
+ * Vue pour les recherches par programme.
+ */
 
 CREATE VIEW recherche_par_programme_view AS
 SELECT book_label,
@@ -230,12 +278,14 @@ SELECT book_label,
        sigle_label,
        program_label
 FROM recherche_base;
-
+/* Test unitaire */
 SELECT *
 FROM recherche_par_programme_view
 where program_label = 'Genie Informatique';
 
-
+/**
+ * Vue pour les recherches par titre.
+ */
 CREATE OR REPLACE VIEW recherche_par_titre_view AS
 SELECT book_label,
        isbn_label,
@@ -244,7 +294,7 @@ SELECT book_label,
        program_label
 FROM recherche_base
 ;
-
+/* Test unitaire */
 SELECT *
 FROM recherche_par_titre_view
 where book_label = 'Reseaux 5e edition';
@@ -258,7 +308,9 @@ from recherche_par_titre_view -- change for title
 where unaccent(LOWER(book_label)) like ('%' || unaccent(LOWER( 'de' )) || '%')
 order by book_label desc;
 -- TEST END ------------------------------------------
-
+/**
+ * Vue pour les recherches par langue.
+ */
 CREATE OR REPLACE VIEW recherche_par_langue_view AS
 SELECT book_label,
        isbn_label,
@@ -267,14 +319,16 @@ SELECT book_label,
        program_label,
        language_label
 FROM recherche_base;
-
+/* Test unitaire */
 SELECT *
 FROM recherche_par_langue_view
 WHERE language_label = 'Anglais';
 
 
 --------------------------------------------------------------
-
+/**
+ * Vue de base pour les recherches.
+ */
 CREATE OR REPLACE VIEW recherche_base AS
 SELECT book.label                                           AS book_label,
        book.codeISBN                                        AS isbn_label,
@@ -319,13 +373,17 @@ FROM ap
          JOIN editor e ON b.editor_id = e.editor_id
          JOIN format f ON b.format_id = f.format_id
          JOIN language l ON b.language_id = l.language_id;*/
-
+/**
+ * Vue pour insérer un livre dans la table book.
+ */
 CREATE VIEW add_bookS_view AS
 SELECT (SELECT COALESCE(MAX(book_id), 0) FROM book) + ROW_NUMBER() OVER () AS book_id,
        label, codeISBN, publicationDate, format_id, URL, language_id, image_id, field_id
 FROM book;
 
--- Créer la règle insert_book_rule
+/**
+ * Règle pour l'insertion d'un livre.
+ */
 CREATE RULE insert_book_rule AS
 
     ON INSERT TO add_bookS_view
@@ -338,7 +396,10 @@ INSERT INTO add_bookS_view (book_id, label, codeISBN, publicationDate, format_id
 VALUES ((SELECT COALESCE(MAX(book_id), 0) FROM book) + 1, 'Nouveau livre', 1234567890, '2023-06-24', 1, 'https://example.com', 1, 1, 1);
 
 
--- une vue pour retourner tous les detail d'un livre
+
+/**
+ * Vue pour retourner tous les detail d'un livre
+ */
 CREATE VIEW book_details AS
 SELECT b.book_id, b.label AS book_label, b.codeISBN, b.publicationDate, f.label AS format_label, b.URL, l.label AS language_label,
        i.data AS image_data, fi.label AS field_label, a.label AS author_label, e.label AS editor_label
