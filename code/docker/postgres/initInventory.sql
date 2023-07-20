@@ -417,3 +417,25 @@ FROM book b
 SELECT * FROM book_details WHERE book_id = 23 ;
 
 
+CREATE VIEW all_info_for_a_book AS
+SELECT  book.label AS book_label , book.codeISBN,book.publicationDate, book.URL,
+        author.label AS author_label, editor.label AS editor_label, field.label AS field_label,
+        format.label AS format_label, image.data,language.label AS language_label,
+        program.label AS program_label ,typeformat.label AS typeformat_label,
+        associated_to_SB.sigle ,ap.label AS ap_label
+FROM book
+         JOIN field ON book.field_id = field.field_id
+         JOIN image ON book.image_id = image.image_id
+         JOIN language ON book.language_id = "language".language_id
+         JOIN format ON book.format_id = format.format_id
+         JOIN associated_to_AB ON book.book_id = associated_to_AB.book_id
+         JOIN associated_to_EB ON book.book_id = associated_to_EB.book_id
+         JOIN editor ON associated_to_EB.editor_id = editor.editor_id
+         JOIN author ON associated_to_AB.author_id = author.author_id
+         JOIN program ON field.field_id = program.field_id AND book.field_id = program.field_id
+         JOIN associated_to_SB ON book.book_id = associated_to_SB.book_id
+         JOIN associated_to_SP ON program.program_id = associated_to_SP.program_id
+         JOIN typeformat ON format.typeformat_id = typeformat.typeformat_id
+         JOIN ap ON associated_to_SB.sigle = ap.sigle AND associated_to_SP.sigle = ap.sigle ;
+
+SELECT * FROM all_info_for_a_book WHERE book_label = 'Reseaux 5e edition' ;
