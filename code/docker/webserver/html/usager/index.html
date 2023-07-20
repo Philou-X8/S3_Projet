@@ -21,14 +21,14 @@
     <form onsubmit="searchFromSigle();return false">
         <label>Code du cours:</label>
         <input type="text" id="sigle_in" name="sigle_label"/>
-        <button type="button" id="button_sigle" onclick="searchFromSigle()">Register</button>
+        <button type="button" id="button_sigle" onclick="searchFromSigle()">Rechercher</button>
     </form>
 </div>
 <div>
     <form onsubmit="searchFromTitle();return false">
         <label>Titre</label>
         <input type="text" id="title_in" name="title_label">
-        <button type="button" id="button_title" onclick="searchFromTitle()">Register</button>
+        <button type="button" id="button_title" onclick="searchFromTitle()">Rechercher</button>
 
     </form>
 </div>
@@ -36,21 +36,21 @@
     <form onsubmit="searchFromIsbn();return false">
         <label>ISBN:</label>
         <input type="text" id="isbn_in" name="isbn_label">
-        <button type="button" id="button_isbn" onclick="searchFromIsbn()">Register</button>
+        <button type="button" id="button_isbn" onclick="searchFromIsbn()">Rechercher</button>
     </form>
 </div>
 <div>
     <form onsubmit="searchFromAuthor();return false">
         <label>Auteur</label>
         <input type="text" id="author_in" name="author_label">
-        <button type="button" id="button_author" onclick="searchFromAuthor()">Register</button>
+        <button type="button" id="button_author" onclick="searchFromAuthor()">Rechercher</button>
     </form>
 </div>
 <div>
     <form onsubmit="searchFromLanguage();return false">
         <label>Langage</label>
         <input type="text" id="language_in" name="language_label">
-        <button type="button" id="button_language" onclick="searchFromLanguage()">Register</button>
+        <button type="button" id="button_language" onclick="searchFromLanguage()">Rechercher</button>
     </form>
 </div>
 <div id="title">
@@ -66,25 +66,13 @@
                 <th>ISBN</th>
                 <th>Sigle</th>
                 <th>Program</th>
-                <th>URL</th>
-                <th>Language</th>
             </tr>
         </thead>
         <tbody id="book_body">
             <tr id="book_table_rows">
                 <td><input  type="radio" ALIGN="CENTER" name="affichage" onclick="selectBook()"></td>
-                <td>python</td>
-                <td></td>
-                <td>9781627056205</td>
                 <td></td>
                 <td></td>
-                <td></td>
-            </tr>
-            <tr id="book">
-                <td><input  type="radio" ALIGN="CENTER" name="affichage" onclick="selectBook()"></td>
-                <td>blabla</td>
-                <td></td>
-                <td>9791092564358</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -150,55 +138,55 @@
 
     <form id="affichageImage" style="border: 2px solid black" class="encadre" hidden>
 
-        <label id="Book_name_encadre" class="machinChouette"></label>
-        <div>
-            <label><strong>ISBN: </strong></label>
+        <strong><label id="Book_name_encadre" class="machinChouette"></label></strong>
+        <div><p class="big">
+            <label><strong> ISBN: </strong></label>
             <label id="isbn_field">test</label>
-        </div>
-        <div>
-            <label><strong>Date de publication: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> Date de publication: </strong></label>
             <label id="date_field">test</label>
-        </div>
-        <div>
-            <label><strong>COOP: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> COOP: </strong></label>
             <label id="url_field">test</label>
-        </div>
-        <div>
-            <label><strong>Auteur: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> Auteur: </strong></label>
             <label id="author_field">test</label>
-        </div>
-        <div>
-            <label><strong>Éditeur: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> Éditeur: </strong></label>
             <label id="editor_field">test</label>
-        </div>
-        <div>
-            <label><strong>Field: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> Field: </strong></label>
             <label id="domain_field">test</label>
-        </div>
-        <div>
-            <label><strong>Format: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> Format: </strong></label>
             <label id="format_field">test</label>
-        </div>
-        <div>
-            <label><strong>Langue: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> Langue: </strong></label>
             <label id="language_field">test</label>
-        </div>
-        <div>
-            <label><strong>Programme: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> Programme: </strong></label>
             <label id="program_field">test</label>
-        </div>
-        <div>
-            <label><strong>Type: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> Type: </strong></label>
             <label id="type_field">test</label>
-        </div>
-        <div>
-            <label><strong>Sigle: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> Sigle: </strong></label>
             <label id="sigle_field">test</label>
-        </div>
-        <div>
-            <label><strong>AP: </strong></label>
+        </p></div>
+        <div><p class="big">
+            <label><strong> AP: </strong></label>
             <label id="ap_field">test</label>
-        </div>
+        </p></div>
 
         <div>
             <img id="img" >
