@@ -204,7 +204,8 @@ FROM ap
          JOIN field             ON book.field_id = field.field_id
          JOIN associated_to_AB  ON book.book_id = associated_to_AB.book_id
          JOIN author            ON associated_to_AB.author_id = author.author_id
-         JOIN program           ON field.field_id = program.field_id
+         JOIN associated_to_SP  ON ap.sigle = associated_to_SP.sigle
+         JOIN program           ON associated_to_SP.program_id = program.program_id
          JOIN language          ON book.language_id = language.language_id
 GROUP BY book_label,
          isbn_label,
@@ -405,11 +406,19 @@ SELECT * FROM book_details WHERE book_id = 23 ;
 
 
 CREATE VIEW all_info_for_a_book AS
-SELECT  book.label AS book_label , book.codeISBN,book.publicationDate, book.URL,
-        author.label AS author_label, editor.label AS editor_label, field.label AS field_label,
-        format.label AS format_label, image.data,language.label AS language_label,
-        program.label AS program_label ,typeformat.label AS typeformat_label,
-        associated_to_SB.sigle ,ap.label AS ap_label
+SELECT  book.label AS book_label,
+        book.codeISBN AS isbn_label,
+        book.publicationDate AS date_label,
+        book.URL AS url_label,
+        string_agg(DISTINCT(author.label), ', ')::varchar AS author_label,
+        editor.label AS editor_label,
+        field.label AS field_label,
+        format.label AS format_label,
+        language.label AS language_label,
+        string_agg(DISTINCT(program.label), ', ')::varchar AS program_label,
+        typeformat.label AS typeformat_label,
+        string_agg(DISTINCT(associated_to_SB.sigle), ', ')::varchar AS sigle_label,
+        string_agg(DISTINCT(ap.label), ', ')::varchar AS ap_label
 FROM book
          JOIN field ON book.field_id = field.field_id
          JOIN image ON book.image_id = image.image_id
@@ -423,7 +432,19 @@ FROM book
          JOIN associated_to_SB ON book.book_id = associated_to_SB.book_id
          JOIN associated_to_SP ON program.program_id = associated_to_SP.program_id
          JOIN typeformat ON format.typeformat_id = typeformat.typeformat_id
-         JOIN ap ON associated_to_SB.sigle = ap.sigle AND associated_to_SP.sigle = ap.sigle ;
+         JOIN ap ON associated_to_SB.sigle = ap.sigle AND associated_to_SP.sigle = ap.sigle
+GROUP BY
+    book_label,
+    isbn_label,
+    date_label,
+    url_label,
+    editor_label,
+    field_label,
+    format_label,
+    language_label,
+    typeformat_label
+
+;
 
 SELECT * FROM all_info_for_a_book WHERE book_label = 'Reseaux 5e edition' ;
 

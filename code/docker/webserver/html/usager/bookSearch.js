@@ -163,7 +163,13 @@ function makeSearch(funct, keyword){
             console.log("Response: ", response.status);
             resetBookTable();
             response.data.forEach(addBookToList);
-            span.innerHTML = '<br> <strong>' + 'Search Complete' + '</strong> </br>';
+            if(response.data.length >= 1){
+                span.innerHTML = '<br> <strong>' + 'Search Complete' + '</strong> </br>';
+            } else {
+                span.innerHTML = '<br> <strong>' + 'Search Complete: No book found' + '</strong> </br>';
+            }
+
+
         })
         .catch(function (error) {
             console.log('refreshing');

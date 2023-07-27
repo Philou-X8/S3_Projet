@@ -88,10 +88,10 @@ public class InventoryService {
     @PermitAll
     public Book getBookfromTitle(@PathParam("titleBook") String title){
         System.out.println("getBookTitle, param received: "+title);
-        Book book = inventoryMapper.getBookFromTitle(title);
-        if(book==null) book=new Book();
-        System.out.println("SQL return : ISBN : "+book.codeisbn.toString());
-        return book;
+        //Book book = inventoryMapper.getBookFromTitle(title);
+        //if(book==null) book=new Book();
+        //System.out.println("SQL return : ISBN : "+book.codeisbn.toString());
+        return null;
     }
 
     /**************** OLD ****************/
@@ -127,9 +127,9 @@ public class InventoryService {
     @PermitAll
     public List<ListedBooks> getBookFromISBN(@PathParam("isbn") String isbn){
         System.out.println("getBookFromISBN : " + isbn);
-        List<ListedBooks> book = inventoryMapper.getBookFromISBN(isbn);
+        //List<ListedBooks> book = inventoryMapper.getBookFromISBN(isbn);
 
-        return book;
+        return null;
     }
 
     /**********************************/
@@ -308,6 +308,33 @@ public class InventoryService {
         return books;
     }
 
+
+
+    @GET
+    @Path("/getBookInfo/{isbn}")
+    @PermitAll
+    public Book getBookAllInfo(
+            @PathParam("isbn") String isbnURL
+    ) {
+        System.out.println("--------------------------");
+        System.out.println("listBooksFromISBN, raw param received: " + isbnURL); // print
+        String isbnStr = URLDecoder.decode(isbnURL, StandardCharsets.UTF_8);
+        try{
+            long isbn = Long.parseLong(isbnStr);
+            System.out.println("listBooksFromISBN, formated param received: " + isbn); // print
+            Book book = inventoryMapper.requestBookAllInfo(isbn);
+
+            if(book == null) book = new Book();
+            //books = collapseLines(books);
+            System.out.println(book);
+            return book;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return new Book();
+        }
+
+
+    }
 
     @GET
     @Path("/addBook/{params}")
