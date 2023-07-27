@@ -151,7 +151,7 @@ function selectBook(){
     var title =table.rows[row].cells[1].innerHTML
     var isbn = table.rows[row].cells[3].innerHTML
     document.getElementById('Book_name_encadre').innerHTML = title;
-    alert(isbn)
+
     var img = document.getElementById('img')
     img.src = "../images/"+isbn+".jpg"
     img.style.height = 7*75+'px'
