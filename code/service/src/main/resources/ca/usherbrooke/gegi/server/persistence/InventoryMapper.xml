@@ -85,4 +85,12 @@
         order by language_label desc;
     </select>
 
+
+    <select id="requestBookAllInfo" resultType="ca.usherbrooke.gegi.server.business.Book">
+        select *
+        from all_info_for_a_book
+        where isbn_label = #{isbn};
+    </select>
+
+
 </mapper>

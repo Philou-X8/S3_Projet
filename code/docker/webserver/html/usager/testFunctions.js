@@ -148,13 +148,46 @@ function selectBook(){
     if(row==-1){
         return
     }
-    var title =table.rows[row].cells[1].innerHTML
-    var isbn = table.rows[row].cells[3].innerHTML
+    var title= table.rows[row].cells[1].innerHTML
+    var isbn= table.rows[row].cells[3].innerHTML
     document.getElementById('Book_name_encadre').innerHTML = title;
-
-    var img = document.getElementById('img')
+    var img= document.getElementById('img')
     img.src = "../images/"+isbn+".jpg"
     img.style.height = 7*75+'px'
     img.style.width = 5*75+'px'
+
+
+    axios.get("http://localhost:8888/api/getBookInfo/" + isbn, {
+        headers: {
+            'Authorization': 'Bearer ' + keycloak.token
+        }
+    })
+        .then(function (response) {
+            console.log("Response: ", response.status);
+
+            document.getElementById('isbn_field').innerHTML = response.data.isbn_label;
+            document.getElementById('date_field').innerHTML = response.data.date_label;
+            document.getElementById('url_field').innerHTML = '<a href="' + response.data.url_label + '" target="_blank">COOP</a>'; //response.data.url_label;
+            document.getElementById('author_field').innerHTML = response.data.author_label;
+            document.getElementById('editor_field').innerHTML = response.data.editor_label;
+            document.getElementById('domain_field').innerHTML = response.data.field_label;
+            document.getElementById('format_field').innerHTML = response.data.format_label;
+            document.getElementById('language_field').innerHTML = response.data.language_label;
+            document.getElementById('program_field').innerHTML = response.data.program_label;
+            document.getElementById('type_field').innerHTML = response.data.typeformat_label;
+            document.getElementById('sigle_field').innerHTML = response.data.sigle_label;
+            document.getElementById('ap_field').innerHTML = response.data.ap_label;
+
+        })
+        .catch(function (error) {
+            console.log('refreshing');
+            span.innerHTML = '<br> <strong>' + 'error with the button: ' + error.toString() + '</strong> </br>'
+            keycloak.updateToken(5).then(function () {
+                console.log('Token refreshed');
+            }).catch(function () {
+                console.log('Failed to refresh token');
+            })
+        });
+
 
 }
