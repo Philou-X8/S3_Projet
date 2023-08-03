@@ -6,6 +6,7 @@ import ca.usherbrooke.gegi.server.business.*;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -282,8 +283,20 @@ public class InventoryService {
 
         System.out.println(cours + " "+title + " "+author+ " "+editor+" "+isbn+" "+url+" "+language);
 
-
         System.out.println("method called :  "+params);
+
+        inventoryMapper.addBookToDB(
+                title,
+                Long.parseLong(isbn),
+                new Date(2003, 8, 3),   // must change - mettre la vrai date
+                1,                                      // must change - id du format (livre, pdf, ect)
+                url,
+                1,                            // must change - id de la langue
+                1,                                      // must change - id du field
+                author,
+                editor,
+                cours
+        );
 
 
     }
