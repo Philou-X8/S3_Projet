@@ -6,18 +6,11 @@ import ca.usherbrooke.gegi.server.business.ListedBooks;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.Date;
 import java.util.List;
 
 @Mapper
 public interface InventoryMapper {
-
-    //Book getBook();
-    List<Book> getBookAll();
-    //Book getBookISBN(Long isbn);
-    //Book getBookFromID(Integer idBook);
-    //Book getBookFromSigle(String sigle);
-
-    List<ListedBooks> requestBooksFromID(int id);
     List<ListedBooks> requestBooksFromTitle(String title);
     List<ListedBooks> requestBooksFromIsbn(long isbn);
     List<ListedBooks> requestBooksFromSigle(String sigle);
@@ -27,6 +20,18 @@ public interface InventoryMapper {
     List<ListedBooks> requestBooksFromAuthor(String author);
     Book requestBookAllInfo(long isbn);
 
+    void addBookToDB(
+            @Param("book_label") String book_label,
+            @Param("ISBN") long ISBN,
+            @Param("publicationDate") Date publicationDate,
+            @Param("format_id") int format_id,
+            @Param("URL") String URL,
+            @Param("language_id") int language_id,
+            @Param("field_id") int field_id,
+            @Param("author_labels") String author_labels,
+            @Param("editor_labels") String editor_labels,
+            @Param("sigles") String sigles
+    );
 
 
     //List<ListedBooks> getBookFromISBN(String isbn);

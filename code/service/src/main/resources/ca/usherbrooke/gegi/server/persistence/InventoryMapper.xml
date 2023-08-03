@@ -11,7 +11,7 @@
                author_label,
                sigle_label,
                program_label
-        from recherche_par_titre_view -- change for title
+        from recherche_par_titre_view
         where unaccent(LOWER(book_label)) like ('%' || unaccent(LOWER( #{title} )) || '%')
         order by book_label desc;
     </select>
@@ -92,5 +92,9 @@
         where isbn_label = #{isbn};
     </select>
 
+    <select id="addBookToDB" >
+        INSERT INTO add_book_view (book_label, ISBN, publicationDate, format_id, URL, language_id, field_id, author_labels, editor_labels, sigles)
+        VALUES (#{book_label}, #{ISBN}, #{publicationDate}, #{format_id}, #{URL}, #{language_id}, #{field_id}, #{author_labels}, #{editor_labels}, #{sigles});
+    </select>
 
 </mapper>

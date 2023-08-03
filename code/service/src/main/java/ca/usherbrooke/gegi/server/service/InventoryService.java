@@ -6,6 +6,7 @@ import ca.usherbrooke.gegi.server.business.*;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,39 +40,6 @@ public class InventoryService {
     InventoryMapper inventoryMapper;
 
 
-    /********************************/
-    /*@GET
-    @Path("/getBook")
-    @PermitAll
-    public Book getBook() {
-        Book book= inventoryMapper.getBook();
-
-        return book;
-    }*/
-    /********************************/
-    @GET
-    @Path("/getBookAll")
-    @PermitAll
-    public List<Book> getBookAll() {
-        List<Book> books = inventoryMapper.getBookAll();
-        System.out.println("All book requested");
-
-        listBooksFromProgram("genie");
-        return books;
-    }
-
-    /**************** OLD ****************/
-    @GET
-    @Path("/getBookFromLanguage/{language}")
-    @PermitAll
-    public List<ListedBooks> getBookFromLanguage(@PathParam("language") String language){
-        System.out.println("getBookFromLanguage : " + language);
-        List<ListedBooks> books = inventoryMapper.requestBooksFromLanguage(language);
-
-        return books;
-
-    }
-
     @GET
     @Path("/deleteBook/{bookID}")
     @RolesAllowed("admin")
@@ -82,54 +50,18 @@ public class InventoryService {
 
     }
 
-    /**************** OLD ****************/
+
     @GET
-    @Path("/getBookFromTitle/{titleBook}")
-    @PermitAll
-    public Book getBookfromTitle(@PathParam("titleBook") String title){
-        System.out.println("getBookTitle, param received: "+title);
-        //Book book = inventoryMapper.getBookFromTitle(title);
-        //if(book==null) book=new Book();
-        //System.out.println("SQL return : ISBN : "+book.codeisbn.toString());
-        return null;
+    @Path("/editer")
+    @RolesAllowed("admin")
+    public void editer(){
+        System.out.println("editer mode engaged");
     }
-
-    /**************** OLD ****************/
     @GET
-    @Path("/getBookFromID/{idBook}")
+    @Path("/viewer")
     @PermitAll
-    public List<ListedBooks> getBookFromID(
-            @PathParam("idBook") Integer idBook
-    ) {
-        System.out.println("getBookISBN, param received: " + idBook.toString()); // print
-        List<ListedBooks> book = inventoryMapper.requestBooksFromID(idBook);
-
-        return book;
-    }
-
-
-    /**************** OLD ****************/
-    @GET
-    @Path("/getBookFromSigle/{sigleBook}")
-    @PermitAll
-    public List<ListedBooks> getBookFromSigle(
-            @PathParam("sigleBook") String sigle
-    ) {
-        System.out.println("getBookISBN, param received: " + sigle); // print
-        List<ListedBooks> book = inventoryMapper.requestBooksFromSigle(sigle);
-
-        return book;
-    }
-
-    /**************** OLD ****************/
-    @GET
-    @Path("/getBookFromISBN/{isbn}")
-    @PermitAll
-    public List<ListedBooks> getBookFromISBN(@PathParam("isbn") String isbn){
-        System.out.println("getBookFromISBN : " + isbn);
-        //List<ListedBooks> book = inventoryMapper.getBookFromISBN(isbn);
-
-        return null;
+    public void viewer(){
+        System.out.println("viewer mode engaged");
     }
 
     /**********************************/
@@ -164,6 +96,8 @@ public class InventoryService {
         }
         return outList;
     }
+
+
 
     @GET
     @Path("/listBooksFromTitle/{title}")
@@ -210,18 +144,6 @@ public class InventoryService {
     }
 
 
-    @GET
-    @Path("/editer")
-    @RolesAllowed("admin")
-    public void editer(){
-        System.out.println("editer mode engaged");
-    }
-    @GET
-    @Path("/viewer")
-    @PermitAll
-    public void viewer(){
-        System.out.println("viewer mode engaged");
-    }
 
     @GET
     @Path("/listBooksFromSigle/{sigle}")
@@ -361,8 +283,21 @@ public class InventoryService {
 
         System.out.println(cours + " "+title + " "+author+ " "+editor+" "+isbn+" "+url+" "+language);
 
-
         System.out.println("method called :  "+params);
+
+        inventoryMapper.addBookToDB(
+                title,
+                Long.parseLong(isbn),
+                new Date(2003, 8, 3),   // must change - mettre la vrai date
+                1,                                      // must change - id du format (livre, pdf, ect)
+                url,
+                1,                            // must change - id de la langue
+                1,                                      // must change - id du field
+                author,
+                editor,
+                cours
+        );
+
 
     }
 
