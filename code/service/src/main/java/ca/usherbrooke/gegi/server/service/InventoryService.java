@@ -39,18 +39,6 @@ public class InventoryService {
     InventoryMapper inventoryMapper;
 
 
-    /********************************/
-    @GET
-    @Path("/getBookAll")
-    @PermitAll
-    public List<Book> getBookAll() {
-        List<Book> books = inventoryMapper.getBookAll();
-        System.out.println("All book requested");
-
-        listBooksFromProgram("genie");
-        return books;
-    }
-
     @GET
     @Path("/deleteBook/{bookID}")
     @RolesAllowed("admin")
@@ -296,6 +284,7 @@ public class InventoryService {
 
 
         System.out.println("method called :  "+params);
+
 
     }
 
