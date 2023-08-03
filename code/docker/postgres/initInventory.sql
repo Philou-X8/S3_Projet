@@ -210,8 +210,7 @@ FROM ap
 GROUP BY book_label,
          isbn_label,
          language_label,
-         field_label
-;
+         field_label;
 
 
 CREATE OR REPLACE VIEW recherche_par_autheur_view AS

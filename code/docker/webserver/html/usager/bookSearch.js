@@ -161,8 +161,8 @@ function makeSearch(funct, keyword){
     })
         .then(function (response) {
             console.log("Response: ", response.status);
-            resetBookTable();
-            response.data.forEach(addBookToList);
+            resetBookTable();                               // clear table
+            response.data.forEach(addBookToList);           // get new table
             if(response.data.length >= 1){
                 span.innerHTML = '<br> <strong>' + 'Search Complete' + '</strong> </br>';
             } else {

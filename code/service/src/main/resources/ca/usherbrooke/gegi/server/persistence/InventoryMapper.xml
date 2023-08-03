@@ -11,7 +11,7 @@
                author_label,
                sigle_label,
                program_label
-        from recherche_par_titre_view -- change for title
+        from recherche_par_titre_view
         where unaccent(LOWER(book_label)) like ('%' || unaccent(LOWER( #{title} )) || '%')
         order by book_label desc;
     </select>

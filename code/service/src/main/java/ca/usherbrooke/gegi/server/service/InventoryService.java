@@ -165,6 +165,20 @@ public class InventoryService {
         return outList;
     }
 
+
+    @GET
+    @Path("/editer")
+    @RolesAllowed("admin")
+    public void editer(){
+        System.out.println("editer mode engaged");
+    }
+    @GET
+    @Path("/viewer")
+    @PermitAll
+    public void viewer(){
+        System.out.println("viewer mode engaged");
+    }
+
     @GET
     @Path("/listBooksFromTitle/{title}")
     @PermitAll
@@ -210,18 +224,6 @@ public class InventoryService {
     }
 
 
-    @GET
-    @Path("/editer")
-    @RolesAllowed("admin")
-    public void editer(){
-        System.out.println("editer mode engaged");
-    }
-    @GET
-    @Path("/viewer")
-    @PermitAll
-    public void viewer(){
-        System.out.println("viewer mode engaged");
-    }
 
     @GET
     @Path("/listBooksFromSigle/{sigle}")
