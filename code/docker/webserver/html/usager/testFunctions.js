@@ -102,6 +102,8 @@ function viewerMode() {
             document.getElementById('in_class').hidden=true;
             document.getElementById('in_BookID').hidden=true;
             document.getElementById('delete_btn').hidden=true
+            document.getElementById('in_date').hidden=true
+            document.getElementById('in_format').hidden=true
 
 }
 
@@ -124,6 +126,8 @@ function editMode() {
             document.getElementById('in_class').hidden=false;
             document.getElementById('in_BookID').hidden=false;
             document.getElementById('delete_btn').hidden=false;
+            document.getElementById('in_date').hidden=false
+            document.getElementById('in_format').hidden=false
 
         })
         .catch(function (error){

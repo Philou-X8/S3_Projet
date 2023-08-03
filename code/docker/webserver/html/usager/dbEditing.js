@@ -6,11 +6,14 @@ function addBook() {
     let isbn = document.getElementById('in_isbn').value;
     let url = document.getElementById('in_url').value;
     let langue = document.getElementById('in_language').value;
+    let date = document.getElementById('in_date').value
+    let format = document.getElementById('in_format').value;
 
 
 
-    let params =cours+'|'+ title+'|'+auth+'|'+editor+'|'+isbn+'|'+url+'|'+langue;
 
+    let params =cours+'|'+ title+'|'+auth+'|'+editor+'|'+isbn+'|'+url+'|'+langue+'|'+date+'|'+format;
+    alert(params);
     axios.get("http://localhost:8888/api/addBook/" + params, {
         headers: {
             'Authorization': 'Bearer ' + keycloak.token

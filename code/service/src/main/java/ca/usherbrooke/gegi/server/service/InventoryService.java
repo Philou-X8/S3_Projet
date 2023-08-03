@@ -7,6 +7,8 @@ import ca.usherbrooke.gegi.server.business.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -261,16 +263,17 @@ public class InventoryService {
     @GET
     @Path("/addBook/{params}")
     @RolesAllowed("admin")
-    public void addBook(@PathParam("params") String params ){
+    public void addBook(@PathParam("params") String params ) throws ParseException {
 
-
+        System.out.println(params);
         int indexFirstSplit = params.indexOf('|');
         int indexSecondSplit = params.indexOf('|',indexFirstSplit+1);
         int indexThirdSplit = params.indexOf('|',indexSecondSplit+1);
         int indexFourthSplit = params.indexOf('|',indexThirdSplit+1);
         int indexFifthSplit = params.indexOf('|',indexFourthSplit+1);
         int indexSixthSplit = params.indexOf('|',indexFifthSplit+1);
-
+        int indexSeventhSplit = params.indexOf('|',indexSixthSplit+1);
+        int index8thSplit = params.indexOf('|',indexSeventhSplit+1);
 
 
         String cours = params.substring(0,indexFirstSplit);
@@ -279,8 +282,26 @@ public class InventoryService {
         String editor = params.substring(indexThirdSplit+1,indexFourthSplit);
         String isbn = params.substring(indexFourthSplit+1, indexFifthSplit);
         String url = params.substring(indexFifthSplit+1,indexSixthSplit);
-        String language = params.substring(indexSixthSplit+1);
+        String language = params.substring(indexSixthSplit+1,indexSeventhSplit);
+        java.util.Date date = new SimpleDateFormat("jj/mm/aaaa").parse(params.substring(indexSeventhSplit+1,index8thSplit));
+        String format = params.substring(index8thSplit+1);
 
+
+        int idLang =0;
+        if(language.equals("francais")){
+            idLang=1;
+        }else if (language.equals("anglais")){
+            idLang=2;
+        }
+        int idFormat =0;
+
+        switch (format){
+            case "papier" : idFormat=1; break;
+            case "pdf" : idFormat=2; break;
+            case  "Epub" : idFormat=3;break;
+            default: throw new RuntimeException("Format non existant");
+
+        }
         System.out.println(cours + " "+title + " "+author+ " "+editor+" "+isbn+" "+url+" "+language);
 
         System.out.println("method called :  "+params);
@@ -288,10 +309,10 @@ public class InventoryService {
         inventoryMapper.addBookToDB(
                 title,
                 Long.parseLong(isbn),
-                new Date(2003, 8, 3),   // must change - mettre la vrai date
-                1,                                      // must change - id du format (livre, pdf, ect)
+                (Date) date,
+                idFormat,
                 url,
-                1,                            // must change - id de la langue
+                idLang,
                 1,                                      // must change - id du field
                 author,
                 editor,
