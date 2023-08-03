@@ -10,14 +10,6 @@ import java.util.List;
 
 @Mapper
 public interface InventoryMapper {
-
-    //Book getBook();
-    List<Book> getBookAll();
-    //Book getBookISBN(Long isbn);
-    //Book getBookFromID(Integer idBook);
-    //Book getBookFromSigle(String sigle);
-
-    List<ListedBooks> requestBooksFromID(int id);
     List<ListedBooks> requestBooksFromTitle(String title);
     List<ListedBooks> requestBooksFromIsbn(long isbn);
     List<ListedBooks> requestBooksFromSigle(String sigle);
